@@ -1,1 +1,7 @@
-<p>perfil works!</p>
+<h2>{{ usuario?.nombre }} {{ usuario?.apellido }}</h2>
+<p>{{ usuario?.correo }}</p>
+<p>@{{ usuario?.nombreUsuario }}</p>
+<p>{{ usuario?.descripcion }}</p>
+@if (usuario?.imagen) {
+    <img [src]="usuario?.imagen" alt="Foto de perfil" />
+}

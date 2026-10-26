@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Auth } from '../../../servicios/auth';
+import { Usuario } from '../../../modelos/usuario';
 
 @Component({
   imports: [],
@@ -6,4 +8,13 @@ import { Component } from '@angular/core';
   styleUrl: './perfil.css',
   templateUrl: './perfil.html',
 })
-export class Perfil {}
+
+export class Perfil implements OnInit {
+  usuario: Usuario | null = null;
+
+  constructor(private auth: Auth) {}
+
+  ngOnInit() {
+    this.usuario = this.auth.usuario();
+  }
+}
