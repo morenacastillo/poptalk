@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UseGuards } from '@nestjs/common';
 import { AutenticacionService } from './autenticacion.service.js';
 import { CreateAutenticacionDto } from './dto/create-autenticacion.dto.js';
 import { UpdateAutenticacionDto } from './dto/update-autenticacion.dto.js';
+import { AuthDto } from './dto/auth.dto.js';
+import { AuthGuard } from '../guards/auth/auth.guard.js';
+import type { Response } from 'express';
 
 @Controller('autenticacion')
 export class AutenticacionController {
-  constructor(private readonly autenticacionService: AutenticacionService) {}
+  constructor(private readonly authService: AutenticacionService) {}
 
-  @Post()
-  create(@Body() createAutenticacionDto: CreateAutenticacionDto) {
-    return this.autenticacionService.create(createAutenticacionDto);
+  @Post('login')
+  async login(@Body() loginAuthDto: AuthDto,
+              @Res({passthrough: true}) res: Response) {
+    const result = await this.authService.login(loginAuthDto);
+    this.authService.setTokenCookie(res, result)
+    return result
   }
 
-  @Get()
-  findAll() {
-    return this.autenticacionService.findAll();
+  @Post('registro')
+  async create(@Body() createAuthDto: CreateAutenticacionDto,
+              @Res({passthrough: true}) res: Response) {
+    const result = await this.authService.registro(createAuthDto);
+    this.authService.setTokenCookie(res, result);
+    return result          
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.autenticacionService.findOne(id);
+  @Get('perfil/:id')
+  @UseGuards(AuthGuard)
+  validateToken(@Param('id') id: string) {
+    return this.authService.getPerfil(id)
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAutenticacionDto: UpdateAutenticacionDto) {
-    return this.autenticacionService.update(id, updateAutenticacionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.autenticacionService.remove(id);
-  }
+  
 }
