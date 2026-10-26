@@ -21,7 +21,7 @@ export const routes: Routes = [
         children:[
             {
                 path: '',
-                loadComponent: () => import('./componentes/usuario/home/home'). then(m => m.Home)
+                loadComponent: () => import('./componentes/usuario/publicaciones/publicaciones').then(m => m.Publicaciones)
             },
             {
                 path: 'perfil',
