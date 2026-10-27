@@ -32,7 +32,7 @@ export class Registro {
 
   constructor (private router: Router, private auth: Auth) {}
 
-  async registro() {
+  registro() {
     if (this.formRegistro.invalid) {
       return;
     }

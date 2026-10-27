@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { DatosLogin, DatosRegistro, RespuestaAuth } from '../modelos/auth';
 import { Usuario } from '../modelos/usuario';
 

@@ -1,1 +1,17 @@
-<p>navbar works!</p>
+<header class="nav">
+    <div class="nav-in">
+        <a class="logo" routerLink="/home"><span>pop</span>talk</a>
+
+        <nav class="nav-links">
+            <a routerLink="/home" routerLinkActive="on" [routerLinkActiveOptions]="{ exact: true }">Publicaciones</a>
+            <a routerLink="/home/perfil" routerLinkActive="on">Mi perfil</a>
+        </nav>
+
+        <div class="me">
+            <span>&#64;{{ usuario()?.nombreUsuario }}</span>
+        </div>
+
+        <button type="button" class="btn btn-sm" (click)="cerrarSesion()">Salir</button>
+    
+    </div>
+</header>

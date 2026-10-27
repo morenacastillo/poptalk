@@ -1,109 +1,112 @@
-    <h2>Crear cuenta</h2>
+<div class="auth-page">
+    <a class="logo" routerLink="/login"><span>pop</span>talk</a>
 
-    <form [formGroup]="formRegistro" (ngSubmit)="registro()">
+    <form class="auth-card" [formGroup]="formRegistro" (ngSubmit)="registro()">
+        <h2>Creá tu cuenta</h2>
+        <p class="sub">Completá tus datos para empezar a opinar.</p>
 
-    <div class="campo">
-        <label for="nombre">Nombre</label>
-        <input id="nombre" type="text" formControlName="nombre" placeholder="Ingresa tu nombre"/>
-        @if (formRegistro.get('nombre')?.errors?.['required'] && formRegistro.get('nombre')?.touched) {
-            <p class="error">El nombre es obligatorio.</p>
+        @if (error()) {
+            <p class="msg-error">{{ error() }}</p>
         }
-    </div>
+        <h3 class="seccion">Datos personales</h3>
+        <div class="fila">
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" type="text" formControlName="nombre" placeholder="Ingresá tu nombre"/>
+                @if (formRegistro.get('nombre')?.errors?.['required'] && formRegistro.get('nombre')?.touched) {
+                    <p class="error">El nombre es obligatorio.</p>
+                }
+            </div>
 
-    <div class="campo">
-        <label for="apellido">Apellido</label>
-        <input id="apellido" type="text" formControlName="apellido" placeholder="Ingresa tu apellido"/>
-        @if (formRegistro.get('apellido')?.errors?.['required'] && formRegistro.get('apellido')?.touched) {
-            <p class="error">El apellido es obligatorio.</p>
-        }
-    </div>
+            <div class="campo">
+                <label for="apellido">Apellido</label>
+                <input id="apellido" type="text" formControlName="apellido" placeholder="Ingresá tu apellido"/>
+                @if (formRegistro.get('apellido')?.errors?.['required'] && formRegistro.get('apellido')?.touched) {
+                    <p class="error">El apellido es obligatorio.</p>
+                }
+            </div>
+        </div>
 
-    <div class="campo">
-        <label for="fechaNacimiento">Fecha de nacimiento</label>
-        <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" />
-        @if (formRegistro.get('fechaNacimiento')?.errors?.['required'] && formRegistro.get('fechaNacimiento')?.touched) {
-            <p class="error">La fecha de nacimiento es obligatoria.</p>
-        }
-    </div>
+        <div class="campo">
+            <label for="fechaNacimiento">Fecha de nacimiento</label>
+            <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento"/>
+            @if (formRegistro.get('fechaNacimiento')?.errors?.['required'] && formRegistro.get('fechaNacimiento')?.touched) {
+                <p class="error">La fecha de nacimiento es obligatoria.</p>
+            }
+        </div>
 
-    <div class="campo">
-        <label for="correo">Correo</label>
-        <input id="correo" type="email" formControlName="correo" placeholder="Ingresa un correo electronico" />
-        @if (formRegistro.get('correo')?.errors?.['required'] && formRegistro.get('correo')?.touched) {
-            <p class="error">El correo es obligatorio.</p>
-        }
-        @if (formRegistro.get('correo')?.errors?.['email'] && formRegistro.get('correo')?.touched) {
-            <p class="error">El correo no tiene un formato válido.</p>
-        }
-    </div>
+        <div class="campo">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" formControlName="descripcion" rows="3" placeholder="Contanos algo sobre vos"></textarea>
+            @if (formRegistro.get('descripcion')?.errors?.['required'] && formRegistro.get('descripcion')?.touched) {
+                <p class="error">La descripción es obligatoria.</p>
+            }
+            @if (formRegistro.get('descripcion')?.errors?.['minlength'] && formRegistro.get('descripcion')?.touched) {
+                <p class="error">La descripción necesita al menos 10 caracteres.</p>
+            }
+        </div>
 
-    <div class="campo">
-        <label for="nombreUsuario">Nombre de usuario</label>
-        <input id="nombreUsuario" type="text" formControlName="nombreUsuario" placeholder="Ingresa un nombre de usuario" />
-        @if (formRegistro.get('nombreUsuario')?.errors?.['required'] && formRegistro.get('nombreUsuario')?.touched) {
-            <p class="error">El nombre de usuario es obligatorio.</p>
-        }
-    </div>
+        <div class="campo">
+            <label for="imagen">Foto de perfil</label>
+            <input id="imagen" type="file" accept="image/*" (change)="seleccionarImagen($event)"/>
+            @if (imagenNombre()) {
+                <small>Seleccionada: {{ imagenNombre() }}</small>
+            }
+        </div>
 
-    <div class="campo">
-        <label for="contrasena">Contraseña</label>
-        <input id="contrasena" type="password" formControlName="contrasena" placeholder="Ingresa una contraseña"/>
-        @if (formRegistro.get('contrasena')?.errors?.['required'] && formRegistro.get('contrasena')?.touched) {
-            <p class="error">La contraseña es obligatoria.</p>
-        }
-        @if (formRegistro.get('contrasena')?.errors?.['pattern'] && formRegistro.get('contrasena')?.touched) {
-            <p class="error">Debe tener al menos 8 caracteres, una mayúscula y un número.</p>
-        }
-    </div>
+        <hr>
+        <h3 class="seccion">Datos de acceso</h3>
+        <div class="campo">
+            <label for="correo">Correo</label>
+            <input id="correo" type="email" formControlName="correo" placeholder="Ingresá tu correo electrónico"/>
+            @if (formRegistro.get('correo')?.errors?.['required'] && formRegistro.get('correo')?.touched) {
+                <p class="error">El correo es obligatorio.</p>
+            }
+            @if (formRegistro.get('correo')?.errors?.['email'] && formRegistro.get('correo')?.touched) {
+                <p class="error">El correo no tiene un formato válido.</p>
+            }
+        </div>
 
-    <div class="campo">
-        <label for="confirmarContrasena">Repetir contraseña</label>
-        <input id="confirmarContrasena" type="password" formControlName="confirmarContrasena" placeholder="Ingresa nuevamente tu contraseña"/>
-        @if (formRegistro.get('confirmarContrasena')?.errors?.['required'] && formRegistro.get('confirmarContrasena')?.touched) {
-            <p class="error">Tenés que repetir la contraseña.</p>
-        }
-        @if (formRegistro.hasError('passwordNoCoincide') && formRegistro.get('confirmarContrasena')?.touched) {
-            <p class="error">Las contraseñas no coinciden.</p>
-        }
-    </div>
-    
-    <div class="campo">
-        <label for="descripcion">Descripción</label>
-        <textarea id="descripcion" formControlName="descripcion" rows="3" placeholder="Contanos algo sobre vos"></textarea>
-        @if (formRegistro.get('descripcion')?.errors?.['required'] && formRegistro.get('descripcion')?.touched) {
-            <p class="error">La descripcion es obligatoria.</p>
-        }
-        @if (formRegistro.get('descripcion')?.errors?.['minlength'] && formRegistro.get('descripcion')?.touched) {
-            <p class="error">La descripción necesita al menos 10 caracteres.</p>
-        }
-    </div>
+        <div class="campo">
+            <label for="nombreUsuario">Nombre de usuario</label>
+            <input id="nombreUsuario" type="text" formControlName="nombreUsuario" placeholder="Elegí un nombre de usuario"/>
+            @if (formRegistro.get('nombreUsuario')?.errors?.['required'] && formRegistro.get('nombreUsuario')?.touched) {
+                <p class="error">El nombre de usuario es obligatorio.</p>
+            }
+        </div>
 
-    <div class="campo">
-        <label for="imagen">Foto de perfil</label>
-        <input id="imagen" type="file" accept="image/*" (change)="seleccionarImagen($event)" />
-        @if (imagenNombre()) {
-            <small>Seleccionada: {{ imagenNombre() }}</small>
-        }
-    </div>
+        <div class="fila">
+            <div class="campo">
+                <label for="contrasena">Contraseña</label>
+                <input id="contrasena" type="password" formControlName="contrasena" placeholder="Ingresá una contraseña"/>
+                @if (formRegistro.get('contrasena')?.errors?.['required'] && formRegistro.get('contrasena')?.touched) {
+                    <p class="error">La contraseña es obligatoria.</p>
+                }
+                @if (formRegistro.get('contrasena')?.errors?.['pattern'] && formRegistro.get('contrasena')?.touched) {
+                    <p class="error">Debe tener al menos 8 caracteres, una mayúscula y un número.</p>
+                }
+            </div>
 
-    @if (error()) {
-    <p class="error campo-ancho">{{ error() }}</p>
-    }
+            <div class="campo">
+                <label for="confirmarContrasena">Repetir contraseña</label>
+                <input id="confirmarContrasena" type="password" formControlName="confirmarContrasena" placeholder="Repetí la contraseña"/>
+                @if (formRegistro.get('confirmarContrasena')?.errors?.['required'] && formRegistro.get('confirmarContrasena')?.touched) {
+                    <p class="error">Tenés que repetir la contraseña.</p>
+                }
+                @if (formRegistro.hasError('passwordNoCoincide') && formRegistro.get('confirmarContrasena')?.touched) {
+                    <p class="error">Las contraseñas no coinciden.</p>
+                }
+            </div>
+        </div>
 
-    <button type="submit" [disabled]="formRegistro.invalid || cargando()">
-        @if (cargando()) {
-            Registrando...
-        } @else {
-            Registrarme
-        }
-    </button>
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="formRegistro.invalid || cargando()">
+            @if (cargando()) {
+                Registrando...
+            } @else {
+                Crear cuenta
+            }
+        </button>
 
-    <h4 class="campo-ancho">¿Ya tenes usuario?</h4>
-    <button type="button" class="campo-ancho" [routerLink]="['/login']">Inicia sesion</button>
-    
-</form>
-
-    @if (guardadoOk()) {
-        <p>Registro exitoso.</p>
-    }
-
+        <p class="switch">¿Ya tenés cuenta? <a routerLink="/login">Ingresá</a></p>
+    </form>
+</div>

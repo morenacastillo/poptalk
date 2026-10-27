@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { roleUsuarioGuard } from './guards/role-usuario-guard';
 
 export const routes: Routes = [
 
@@ -18,6 +19,7 @@ export const routes: Routes = [
     {
         path: "home",
         loadComponent: () => import('./componentes/compartidos/layout/layout'). then(m => m.Layout),
+        canMatch: [roleUsuarioGuard],
         children:[
             {
                 path: '',

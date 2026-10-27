@@ -21,7 +21,7 @@ export class Login {
 
   constructor(private router: Router, private auth: Auth) {}
 
-  async login() {
+  login() {
     if (this.formLogin.invalid) {
       return;
     }
@@ -30,8 +30,6 @@ export class Login {
 
     this.auth.login(this.formLogin.getRawValue()).subscribe({
       next: (respuesta) => {
-        localStorage.setItem('token', respuesta.token);
-        localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
         this.cargando.set(false);
         this.auth.guardarSesion(respuesta);
         this.router.navigate(['/home']);

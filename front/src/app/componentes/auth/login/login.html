@@ -1,43 +1,44 @@
-<p>login works!</p>
+<div class="auth-page">
+    <a class="logo" routerLink="/login"><span>pop</span>talk</a>
 
-<a [routerLink]="['/registro']">registro</a>
+    <form class="auth-card" [formGroup]="formLogin" (ngSubmit)="login()">
+        <h2>Ingresa a tu cuenta</h2>
+        <p class="sub">Usá tu correo y tu contraseña.</p>
 
-<a [routerLink]="['/home/perfil']">perfil</a>
-
-
-<form [formGroup]="formLogin" (ngSubmit)="login()">
-    <div class="campo">
-        <label for="correo">Correo</label>
-        <input id="correo" type="email" formControlName="correo" placeholder="Ingresa tu correo electronico"/>
-        @if (formLogin.get('correo')?.errors?.['required'] && formLogin.get('correo')?.touched) {
-            <p class="error">El correo es obligatorio.</p>
+        @if (error()) {
+            <p class="msg-error">{{ error() }}</p>
         }
-        @if (formLogin.get('correo')?.errors?.['email'] && formLogin.get('correo')?.touched) {
-            <p class="error">El correo no tiene un formato válido.</p>
-        }
-    </div>
 
-    <div class="campo">
-        <label for="contrasena">Contraseña</label>
-        <input id="contrasena" type="password" formControlName="contrasena" placeholder="Ingresa tu contraseña"/>
-        @if (formLogin.get('contrasena')?.errors?.['required'] && formLogin.get('contrasena')?.touched) {
-            <p class="error">La contraseña es obligatoria.</p>
-        }
-        @if (formLogin.get('contrasena')?.errors?.['pattern'] && formLogin.get('contrasena')?.touched) {
-            <p class="error">Debe tener al menos 8 caracteres, una mayúscula y un número.</p>
-        }
-    </div>
+        <div class="campo">
+            <label for="correo">Correo</label>
+            <input id="correo" type="email" formControlName="correo" placeholder="Ingresá tu correo electrónico"/>
+            @if (formLogin.get('correo')?.errors?.['required'] && formLogin.get('correo')?.touched) {
+                <p class="error">El correo es obligatorio.</p>
+            }
+            @if (formLogin.get('correo')?.errors?.['email'] && formLogin.get('correo')?.touched) {
+                <p class="error">El correo no tiene un formato válido.</p>
+            }
+        </div>
 
-    @if (error()) {
-        <p>{{ error() }}</p>
-    }
+        <div class="campo">
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" type="password" formControlName="contrasena" placeholder="Ingresá tu contraseña"/>
+            @if (formLogin.get('contrasena')?.errors?.['required'] && formLogin.get('contrasena')?.touched) {
+                <p class="error">La contraseña es obligatoria.</p>
+            }
+            @if (formLogin.get('contrasena')?.errors?.['pattern'] && formLogin.get('contrasena')?.touched) {
+                <p class="error">Debe tener al menos 8 caracteres, una mayúscula y un número.</p>
+            }
+        </div>
 
-    <button type="submit" [disabled]="formLogin.invalid || cargando()">
-        @if (cargando()) {
-            Ingresando...
-        } @else {
-            Iniciar sesion
-        }
-    </button>
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="formLogin.invalid || cargando()">
+            @if (cargando()) {
+                Ingresando...
+            } @else {
+                Ingresar
+            }
+        </button>
 
-</form>
+        <p class="switch">¿No tenés cuenta? <a routerLink="/registro">Registrate</a></p>
+    </form>
+</div>

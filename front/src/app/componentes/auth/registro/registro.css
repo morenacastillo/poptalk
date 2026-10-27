@@ -1,0 +1,26 @@
+.auth-card {
+    max-width: 560px;
+}
+
+.fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 14px;
+}
+
+@media (max-width: 520px) {
+    .fila {
+        grid-template-columns: 1fr;
+    }
+}
+
+hr {
+    border: none;
+    border-top: var(--bw) dashed var(--ink);
+    margin: 24px 0;
+}
+
+.seccion {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+}
