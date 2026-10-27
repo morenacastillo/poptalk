@@ -8,7 +8,6 @@ import { PublicacionesModule } from './publicaciones/publicaciones.module.js';
 import { AutenticacionModule } from './autenticacion/autenticacion.module.js';
 import { AuthenticationModule } from '@nestjs/authentication';
 
-
 @Module({
   imports: [ConfigModule.forRoot(),
             MongooseModule.forRoot(process.env.CONNECTION_STRING!), // conexion con mongo

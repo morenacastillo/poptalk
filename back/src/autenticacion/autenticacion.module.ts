@@ -5,6 +5,7 @@ import { UsuarioSchema } from '../usuarios/entities/usuario.entity.js';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { FileService } from '../file/file/file.service.js';
 
 
 @Module({
@@ -19,6 +20,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 
   ],
   controllers: [AutenticacionController],
-  providers: [AutenticacionService],
+  providers: [AutenticacionService, FileService],
 })
 export class AutenticacionModule {}

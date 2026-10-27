@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UseGuards, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AutenticacionService } from './autenticacion.service.js';
 import { CreateAutenticacionDto } from './dto/create-autenticacion.dto.js';
 import { AuthDto } from './dto/auth.dto.js';
 import { AuthGuard } from '../guards/auth/auth.guard.js';
 import type { Response } from 'express';
+import { FileService } from '../file/file/file.service.js';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { memoryStorage } from 'multer';
 
 @Controller('autenticacion')
 export class AutenticacionController {
@@ -18,12 +21,14 @@ export class AutenticacionController {
   }
 
   @Post('registro')
-  async create(@Body() createAuthDto: CreateAutenticacionDto,
+  @UseInterceptors(FileInterceptor('imagen', { storage: memoryStorage() }))
+  async create(@UploadedFile() imagen: Express.Multer.File,
+              @Body() createAuthDto: CreateAutenticacionDto,
               @Res({passthrough: true}) res: Response) {
-    const result = await this.authService.registro(createAuthDto);
-    this.authService.setTokenCookie(res, result.token);
-    return result;         
-  }
+  const result = await this.authService.registro(createAuthDto, imagen);
+  this.authService.setTokenCookie(res, result.token);
+  return result;
+}
 
   @Get('perfil/:id')
   @UseGuards(AuthGuard)

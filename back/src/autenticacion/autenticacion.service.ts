@@ -7,6 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthDto } from './dto/auth.dto.js';
 import { PasswordHasher } from '@nestjs/authentication';
+import { FileService } from '../file/file/file.service.js';
 
 
 @Injectable()
@@ -15,7 +16,8 @@ export class AutenticacionService {
   constructor(
     @InjectModel(Usuario.name) private usuarioModel: Model<Usuario>,
     private readonly passwordHasher: PasswordHasher,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly fileService: FileService
     ){}
 
 
@@ -31,7 +33,7 @@ export class AutenticacionService {
 
 
 
-  async registro(createAuthDto: CreateAutenticacionDto) {
+  async registro(createAuthDto: CreateAutenticacionDto, imagen: Express.Multer.File) {
     const correoUsado = await this.usuarioModel.findOne({ correo: createAuthDto.correo });
     if (correoUsado) {
       throw new BadRequestException('El correo ya está registrado');
@@ -41,6 +43,11 @@ export class AutenticacionService {
     if (usuarioUsado) {
       throw new BadRequestException('El nombre de usuario ya está en uso');
     }
+
+    if (!imagen) {
+      throw new BadRequestException('La imagen de perfil es obligatoria');
+    }
+    createAuthDto.imagen = await this.fileService.subirImagen(imagen);
 
     createAuthDto.contrasena = await this.passwordHasher.hash(createAuthDto.contrasena);
     const newUser = await this.usuarioModel.create(createAuthDto)
