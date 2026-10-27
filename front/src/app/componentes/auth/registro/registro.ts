@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PasswordValidator } from '../validators/password-validator';
 import { Auth } from '../../../servicios/auth';
@@ -30,10 +30,15 @@ export class Registro {
   imagenNombre = signal('');
 
 
-  constructor (private router: Router, private auth: Auth) {}
+  constructor (private auth: Auth) {}
 
-  registro() {
+  registro(inputImagen: HTMLInputElement) {
     if (this.formRegistro.invalid) {
+      return;
+    }
+
+    if (!this.imagen) {
+      this.error.set('Elegí una foto de perfil.');
       return;
     }
 
@@ -42,22 +47,26 @@ export class Registro {
     this.guardadoOk.set(false);
 
     const valores = this.formRegistro.getRawValue();
-    const datos = {
-      nombreUsuario: valores.nombreUsuario,
-      nombre: valores.nombre,
-      apellido: valores.apellido,
-      correo: valores.correo,
-      contrasena: valores.contrasena,
-      fechaNacimiento: valores.fechaNacimiento,
-      descripcion: valores.descripcion,
-    };
+    const datos = new FormData();
+    datos.append('nombreUsuario', valores.nombreUsuario);
+    datos.append('nombre', valores.nombre);
+    datos.append('apellido', valores.apellido);
+    datos.append('correo', valores.correo);
+    datos.append('contrasena', valores.contrasena);
+    datos.append('fechaNacimiento', valores.fechaNacimiento);
+    datos.append('descripcion', valores.descripcion);
+    datos.append('imagen', this.imagen);
 
     this.auth.registro(datos).subscribe({
     next: () => {
-      this.cargando.set(false);
-      this.formRegistro.reset();
-      this.router.navigate(['/login']);
-    },
+    this.cargando.set(false);
+    this.formRegistro.reset();
+    this.imagen = null;
+    this.imagenNombre.set('');
+    inputImagen.value = '';
+    this.guardadoOk.set(true);
+    setTimeout(() => this.guardadoOk.set(false), 3000);
+  },
     error: (err) => {
       this.cargando.set(false);
       const mensaje = err.error?.message;

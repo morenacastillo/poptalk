@@ -14,7 +14,7 @@ export class Auth {
         return this.http.post<RespuestaAuth>(this.url + '/login', datos)
     }
 
-    registro(datos: DatosRegistro) {
+    registro(datos: FormData) {
         return this.http.post<RespuestaAuth>(this.url + '/registro', datos)
     }
 

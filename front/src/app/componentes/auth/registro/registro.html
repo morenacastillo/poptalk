@@ -1,7 +1,7 @@
 <div class="auth-page">
     <a class="logo" routerLink="/login"><span>pop</span>talk</a>
 
-    <form class="auth-card" [formGroup]="formRegistro" (ngSubmit)="registro()">
+    <form class="auth-card" [formGroup]="formRegistro" (ngSubmit)="registro(inputImagen)">
         <h2>Creá tu cuenta</h2>
         <p class="sub">Completá tus datos para empezar a opinar.</p>
 
@@ -27,12 +27,22 @@
             </div>
         </div>
 
-        <div class="campo">
-            <label for="fechaNacimiento">Fecha de nacimiento</label>
-            <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento"/>
-            @if (formRegistro.get('fechaNacimiento')?.errors?.['required'] && formRegistro.get('fechaNacimiento')?.touched) {
-                <p class="error">La fecha de nacimiento es obligatoria.</p>
-            }
+        <div class="fila">
+            <div class="campo">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento"/>
+                @if (formRegistro.get('fechaNacimiento')?.errors?.['required'] && formRegistro.get('fechaNacimiento')?.touched) {
+                    <p class="error">La fecha de nacimiento es obligatoria.</p>
+                }
+            </div>
+
+            <div class="campo">
+                <label for="imagen">Foto de perfil</label>
+                <input #inputImagen id="imagen" type="file" accept="image/*" (change)="seleccionarImagen($event)"/>
+                @if (imagenNombre()) {
+                    <small>Seleccionada: {{ imagenNombre() }}</small>
+                }
+            </div>
         </div>
 
         <div class="campo">
@@ -46,33 +56,27 @@
             }
         </div>
 
-        <div class="campo">
-            <label for="imagen">Foto de perfil</label>
-            <input id="imagen" type="file" accept="image/*" (change)="seleccionarImagen($event)"/>
-            @if (imagenNombre()) {
-                <small>Seleccionada: {{ imagenNombre() }}</small>
-            }
-        </div>
-
         <hr>
         <h3 class="seccion">Datos de acceso</h3>
-        <div class="campo">
-            <label for="correo">Correo</label>
-            <input id="correo" type="email" formControlName="correo" placeholder="Ingresá tu correo electrónico"/>
-            @if (formRegistro.get('correo')?.errors?.['required'] && formRegistro.get('correo')?.touched) {
-                <p class="error">El correo es obligatorio.</p>
-            }
-            @if (formRegistro.get('correo')?.errors?.['email'] && formRegistro.get('correo')?.touched) {
-                <p class="error">El correo no tiene un formato válido.</p>
-            }
-        </div>
+        <div class="fila">
+            <div class="campo">
+                <label for="correo">Correo</label>
+                <input id="correo" type="email" formControlName="correo" placeholder="Ingresá tu correo electrónico"/>
+                @if (formRegistro.get('correo')?.errors?.['required'] && formRegistro.get('correo')?.touched) {
+                    <p class="error">El correo es obligatorio.</p>
+                }
+                @if (formRegistro.get('correo')?.errors?.['email'] && formRegistro.get('correo')?.touched) {
+                    <p class="error">El correo no tiene un formato válido.</p>
+                }
+            </div>
 
-        <div class="campo">
-            <label for="nombreUsuario">Nombre de usuario</label>
-            <input id="nombreUsuario" type="text" formControlName="nombreUsuario" placeholder="Elegí un nombre de usuario"/>
-            @if (formRegistro.get('nombreUsuario')?.errors?.['required'] && formRegistro.get('nombreUsuario')?.touched) {
-                <p class="error">El nombre de usuario es obligatorio.</p>
-            }
+            <div class="campo">
+                <label for="nombreUsuario">Nombre de usuario</label>
+                <input id="nombreUsuario" type="text" formControlName="nombreUsuario" placeholder="Elegí un nombre de usuario"/>
+                @if (formRegistro.get('nombreUsuario')?.errors?.['required'] && formRegistro.get('nombreUsuario')?.touched) {
+                    <p class="error">El nombre de usuario es obligatorio.</p>
+                }
+            </div>
         </div>
 
         <div class="fila">
@@ -106,7 +110,9 @@
                 Crear cuenta
             }
         </button>
-
+        @if (guardadoOk()) {
+            <p class="msg-ok">¡Registro exitoso! Ya podés iniciar sesión.</p>
+        }
         <p class="switch">¿Ya tenés cuenta? <a routerLink="/login">Ingresá</a></p>
     </form>
 </div>
