@@ -4,7 +4,6 @@ import { CreateAutenticacionDto } from './dto/create-autenticacion.dto.js';
 import { AuthDto } from './dto/auth.dto.js';
 import { AuthGuard } from '../guards/auth/auth.guard.js';
 import type { Response } from 'express';
-import { FileService } from '../file/file/file.service.js';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 
@@ -17,7 +16,13 @@ export class AutenticacionController {
               @Res({passthrough: true}) res: Response) {
     const result = await this.authService.login(loginAuthDto);
     this.authService.setTokenCookie(res, result.token);
-    return result;
+    return { usuario: result.usuario }; //se entrega el token al navegador
+  }
+
+  @Post('logout')
+  logout(@Res({passthrough: true}) res: Response) {
+    this.authService.clearTokenCookie(res);
+    return { mensaje: 'Sesión cerrada' };
   }
 
   @Post('registro')
@@ -26,12 +31,11 @@ export class AutenticacionController {
               @Body() createAuthDto: CreateAutenticacionDto,
               @Res({passthrough: true}) res: Response) {
   const result = await this.authService.registro(createAuthDto, imagen);
-  this.authService.setTokenCookie(res, result.token);
   return result;
 }
 
   @Get('perfil/:id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard) //antes de entrar al id de un usuario, valida el token
   validateToken(@Param('id') id: string) {
     return this.authService.getPerfil(id)
   }

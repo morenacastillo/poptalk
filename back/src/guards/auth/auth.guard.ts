@@ -7,18 +7,19 @@ export class AuthGuard implements CanActivate { //los guards son clases siempre 
 
   constructor(private readonly jwtService: JwtService) {}
 
+  // sirve para verificar que el token sea valido antes de entrar al sitio
   canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+    context: ExecutionContext,): 
+    boolean | Promise<boolean> | Observable<boolean> {
     
-    const token = this.extractTokenCookie(context);
+    const token = this.extractTokenCookie(context); //extrae e tijeb dek oedudi
 
     if(!token) {
       throw new UnauthorizedException();
     }
 
     try {
-      const payload = this.jwtService.verify(token);
+      const payload = this.jwtService.verify(token); //verifica si es valido y no esta vencido
       console.log(payload)
       context.switchToHttp().getRequest().user = payload;
       return true

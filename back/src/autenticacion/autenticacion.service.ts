@@ -21,10 +21,13 @@ export class AutenticacionService {
     ){}
 
 
+
   async login(loginAuthDto: AuthDto) {
     const user = await this.usuarioModel.findOne({ correo: loginAuthDto.correo})
-
-    if (!user || !(await this.passwordHasher.verify(loginAuthDto.contrasena, user.contrasena))) {
+    if(!user) {
+      throw new UnauthorizedException('Las credenciales no son correctas');
+    }
+    if (!(await this.passwordHasher.verify(loginAuthDto.contrasena, user.contrasena))) { //compara contraseña ingresada con el hash guardado
       throw new UnauthorizedException('Las credenciales no son correctas');
     }
 
@@ -50,16 +53,16 @@ export class AutenticacionService {
     createAuthDto.imagen = await this.fileService.subirImagen(imagen);
 
     createAuthDto.contrasena = await this.passwordHasher.hash(createAuthDto.contrasena);
-    const newUser = await this.usuarioModel.create(createAuthDto)
+    const newUser = await this.usuarioModel.create(createAuthDto);
 
     if(!newUser) {
       throw new Error('Error al crear el usuario')
     }
 
-    return this.armarRespuesta(newUser); // esto hace q una vez registro ok, nos loguee con esa cuenta
-                                        // si no se inicia sesion, no se genera token
+    return { usuario: this.armarUsuario(newUser) };
   }
   
+
 
   async getPerfil(id: string ) {
     const user = await this.usuarioModel.findById(id)
@@ -68,37 +71,66 @@ export class AutenticacionService {
     }
     return user
   }
-  
+
+
+  //payload son los datos que viajan adentro del token. signAsync los firma con la clave secreta y devuelve el token ya armado.
   generateToken(usuario: UsuarioDocument) {
     const payload = {correo: usuario.correo, sub: usuario._id}
     return this.jwtService.signAsync(payload)
   }
 
+
+
   async armarRespuesta(user: UsuarioDocument) {
     const token = await this.generateToken(user);
-    const usuario = {
-      _id: user._id,
-      nombreUsuario: user.nombreUsuario,
-      nombre: user.nombre,
-      apellido: user.apellido,
-      correo: user.correo,
-      fechaNacimiento: user.fechaNacimiento,
-      descripcion: user.descripcion,
-      imagen: user.imagen,
-      perfil: user.perfil,
-      habilitado: user.habilitado,
-    };
-    return { token, usuario };
+    return { token, usuario: this.armarUsuario(user) };
   }
 
 
+
+  armarUsuario(user: UsuarioDocument) {
+  return {
+    _id: user._id,
+    nombreUsuario: user.nombreUsuario,
+    nombre: user.nombre,
+    apellido: user.apellido,
+    correo: user.correo,
+    fechaNacimiento: user.fechaNacimiento,
+    descripcion: user.descripcion,
+    imagen: user.imagen,
+    perfil: user.perfil,
+    habilitado: user.habilitado,
+  };
+}
+
+
+  // en producción (Vercel, HTTPS) el front y el back están en dominios distintos:
+  // la cookie necesita secure + sameSite 'none'. En local alcanza con 'lax'.
+  private opcionesCookie() {
+    // link del deploy en Vercel o localhost
+    // Vercel pone NODE_ENV = 'production'. En localhost no existe
+    const produccion = process.env.NODE_ENV === 'production';
+    return {
+      httpOnly: true, // para evitar ataques 
+      secure: produccion,
+       //  front y back están en dominios distintos:
+      //   local      -> 'lax'  (front y back son el mismo sitio: localhost)
+      //   producción -> 'none' (front y back son sitios distintos: dos dominios de Vercel)
+      sameSite: produccion ? ('none' as const) : ('lax' as const),
+    };
+  }
+
+
+
   setTokenCookie(res: Response, token: string) {
-    res.cookie('token', token,
-      { httpOnly: true, // para evitar ataques XSS
-        sameSite: 'strict', // para evitar ataques CSRF
-        secure: false,
-        maxAge: 1000 * 20, // 20 segundos, sincronización con el token
-      });
+    res.cookie('token', token, {
+      ...this.opcionesCookie(),
+      maxAge: 1000 * 20, // 20 segundos, sincronización con el token
+    });
+  }
+
+  clearTokenCookie(res: Response) {
+    res.clearCookie('token', this.opcionesCookie());
   }
 
 }
