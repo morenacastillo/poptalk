@@ -79,6 +79,16 @@ export class Registro {
   seleccionarImagen(event: Event) {
     const input = event.target as HTMLInputElement;
     const archivo = input.files?.[0] ?? null;
+
+    if (archivo && archivo.size > 2 * 1024 * 1024) {
+      this.error.set('La imagen no puede pesar más de 2 MB.');
+      input.value = '';
+      this.imagen = null;
+      this.imagenNombre.set('');
+      return;
+    }
+
+    this.error.set('');
     this.imagen = archivo;
     this.imagenNombre.set(archivo ? archivo.name : '');
   }

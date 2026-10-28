@@ -28,7 +28,7 @@ export class Login {
     this.cargando.set(true);
     this.error.set('');
 
-    this.auth.login(this.formLogin.getRawValue()).subscribe({
+    this.auth.login(this.formLogin.getRawValue()).subscribe({ //observable al que hay que suscribirse
       next: (respuesta) => {
         this.cargando.set(false);
         this.auth.guardarSesion(respuesta.usuario);
