@@ -1,11 +1,16 @@
+/* Solo lo que usa la pantalla de registro.
+   Lo compartido con el login (tarjeta compacta, campos, errores) está en src/styles.css */
+
+/* el registro es más ancho que el login porque tiene dos columnas */
 .auth-card {
-    max-width: 760px;
+    max-width: 680px;
 }
 
+/* dos columnas: nombre/apellido y contraseña/repetir */
 .fila {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0 14px;
+    gap: 0 12px;
 }
 
 @media (max-width: 520px) {
@@ -14,23 +19,14 @@
     }
 }
 
+/* separador entre datos personales y datos de acceso */
 hr {
     border: none;
-    border-top: var(--bw) dashed var(--ink);
-    margin: 24px 0;
+    border-top: 2px dashed var(--ink);
+    margin: 14px 0;
 }
 
 .seccion {
-    font-size: 1.1rem;
-    margin-bottom: 14px;
-}
-
-.msg-ok {
-    background: var(--ok);
-    border: 2px solid var(--ink);
-    border-radius: 10px;
-    padding: 8px 12px;
-    font-size: .88rem;
-    font-weight: 700;
-    margin-bottom: 14px;
+    font-size: 1rem;
+    margin-bottom: 8px;
 }

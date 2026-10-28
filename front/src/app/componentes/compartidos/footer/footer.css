@@ -1,7 +1,17 @@
 .footer {
     border-top: var(--bw) solid var(--ink);
     background: var(--sky);
-    padding: 16px;
-    text-align: center;
+    padding: 12px 16px;
     font-size: .9rem;
+}
+
+/* mismo ancho que el contenido de la página: texto a la izquierda, botón a la derecha */
+.footer-in {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
 }

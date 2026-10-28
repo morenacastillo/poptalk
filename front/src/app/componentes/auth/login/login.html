@@ -10,26 +10,22 @@
         }
 
         <div class="campo">
-            <label for="correo">Correo</label>
+            <label for="correo">Correo <span class="req">*</span></label>
             <input id="correo" type="email" formControlName="correo" placeholder="Ingresá tu correo electrónico"/>
-            @if (formLogin.get('correo')?.errors?.['required'] && formLogin.get('correo')?.touched) {
-                <p class="error">El correo es obligatorio.</p>
-            }
             @if (formLogin.get('correo')?.errors?.['email'] && formLogin.get('correo')?.touched) {
                 <p class="error">El correo no tiene un formato válido.</p>
             }
         </div>
 
-        <div class="campo">
-            <label for="contrasena">Contraseña</label>
+        <div class="campo campo-reserva">
+            <label for="contrasena">Contraseña <span class="req">*</span></label>
             <input id="contrasena" type="password" formControlName="contrasena" placeholder="Ingresá tu contraseña"/>
-            @if (formLogin.get('contrasena')?.errors?.['required'] && formLogin.get('contrasena')?.touched) {
-                <p class="error">La contraseña es obligatoria.</p>
-            }
             @if (formLogin.get('contrasena')?.errors?.['pattern'] && formLogin.get('contrasena')?.touched) {
-                <p class="error">Debe tener al menos 8 caracteres, una mayúscula y un número.</p>
+                <p class="error abajo">Mínimo 8 caracteres, una mayúscula y un número.</p>
             }
         </div>
+
+        <p class="leyenda"><span class="req">*</span> Campo obligatorio</p>
 
         <button type="submit" class="btn btn-primary btn-block" [disabled]="formLogin.invalid || cargando()">
             @if (cargando()) {

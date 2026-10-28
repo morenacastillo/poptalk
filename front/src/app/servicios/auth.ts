@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { DatosLogin, DatosRegistro, RespuestaAuth } from '../modelos/auth';
+import { DatosLogin, RespuestaAuth } from '../modelos/auth';
 import { Usuario } from '../modelos/usuario';
 
 @Service()
@@ -10,28 +10,32 @@ export class Auth {
     public usuario = signal<Usuario | null>(this.leerUsuario());
     private url = environment.apiUrl + '/autenticacion'
 
+    // withCredentials: true hace que el navegador reciba y mande la cookie con el token
     login(datos: DatosLogin) {
-        return this.http.post<RespuestaAuth>(this.url + '/login', datos)
+        return this.http.post<RespuestaAuth>(this.url + '/login', datos, { withCredentials: true })
     }
 
     registro(datos: FormData) {
-        return this.http.post<RespuestaAuth>(this.url + '/registro', datos)
+        return this.http.post<RespuestaAuth>(this.url + '/registro', datos, { withCredentials: true })
     }
 
-    guardarSesion(respuesta: RespuestaAuth) {
-        localStorage.setItem('token', respuesta.token);
-        localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
-        this.usuario.set(respuesta.usuario);
+    // el token vive en la cookie (httpOnly): acá solo se guardan los datos del usuario
+    guardarSesion(usuario: Usuario) {
+        localStorage.setItem('usuario', JSON.stringify(usuario));
+        this.usuario.set(usuario);
     }
 
+    // la cookie httpOnly no se puede borrar desde el front: se le pide al back que la borre
     cerrarSesion() {
-        localStorage.removeItem('token');
+        this.http.post(this.url + '/logout', {}, { withCredentials: true }).subscribe({
+            error: () => {}
+        });
         localStorage.removeItem('usuario');
         this.usuario.set(null);
     }
 
     estaLogueado() {
-        return localStorage.getItem('token') !== null;
+        return this.usuario() !== null;
     }
 
     private leerUsuario(): Usuario | null {

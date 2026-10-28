@@ -1,7 +1,6 @@
 import { Usuario } from './usuario';
 
 export interface RespuestaAuth {
-    token: string;
     usuario: Usuario;
 }
 

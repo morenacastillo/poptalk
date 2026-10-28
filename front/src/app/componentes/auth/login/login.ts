@@ -31,13 +31,18 @@ export class Login {
     this.auth.login(this.formLogin.getRawValue()).subscribe({
       next: (respuesta) => {
         this.cargando.set(false);
-        this.auth.guardarSesion(respuesta);
+        this.auth.guardarSesion(respuesta.usuario);
         this.router.navigate(['/home']);
       },
       error: (err) => {
         this.cargando.set(false);
+        
+        if (err.status === 0) {
+          this.error.set('No se pudo conectar con el servidor.');
+          return;
+        }
         const mensaje = err.error?.message;
-        this.error.set(Array.isArray(mensaje) ? mensaje.join('. ') : (mensaje ?? 'No se pudo conectar con el servidor.'));
+        this.error.set(Array.isArray(mensaje) ? mensaje.join('. ') : (mensaje ?? 'Ocurrió un error inesperado.'));
       }
     });
   }

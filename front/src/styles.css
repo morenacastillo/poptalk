@@ -1,3 +1,10 @@
+/* =====================================================
+   Poptalk · estilos globales
+   Acá va todo lo que usan varias pantallas a la vez.
+   Lo que usa una sola pantalla va en el .css de su componente.
+   ===================================================== */
+
+/* ---------- paleta y variables ---------- */
 :root {
     --bg: #E6F4FC;
     --sky: #BFE6FA;
@@ -10,6 +17,8 @@
     --butter: #FFE8A3;
     --ok: #B6F0CF;
     --err: #FFB4B4;
+    --danger: #B42318;
+    --danger-bg: #FFF1F0;
     --r: 14px;
     --bw: 2.5px;
     --sh: 4px 4px 0 var(--ink);
@@ -17,6 +26,7 @@
     --f-body: 'DM Sans', system-ui, sans-serif;
 }
 
+/* ---------- base ---------- */
 * { box-sizing: border-box; margin: 0; }
 
 body {
@@ -30,19 +40,7 @@ h1, h2, h3 { font-family: var(--f-title); font-weight: 800; letter-spacing: -.02
 a { color: inherit; }
 button { font: inherit; color: inherit; cursor: pointer; }
 
-.btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    border: var(--bw) solid var(--ink); border-radius: 10px;
-    padding: 10px 18px; font-weight: 700; background: var(--white);
-    box-shadow: 3px 3px 0 var(--ink);
-    transition: transform .08s, box-shadow .08s; text-decoration: none;
-}
-.btn:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--ink); }
-.btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
-.btn-sm { padding: 6px 12px; font-size: .88rem; box-shadow: 2px 2px 0 var(--ink); }
-
-
-/* ---------- logo (va acá para usarlo en navbar, login y registro) ---------- */
+/* ---------- logo (navbar, login y registro) ---------- */
 .logo {
     font-family: var(--f-title);
     font-weight: 800;
@@ -61,13 +59,25 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 /* ---------- botones ---------- */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border: var(--bw) solid var(--ink); border-radius: 10px;
+    padding: 10px 18px; font-weight: 700; background: var(--white);
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .08s, box-shadow .08s; text-decoration: none;
+}
+.btn:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--ink); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+.btn-sm { padding: 6px 12px; font-size: .88rem; box-shadow: 2px 2px 0 var(--ink); }
 .btn-primary { background: var(--sky-d); }
 .btn-block { width: 100%; }
 .btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
 
 /* ---------- formularios ---------- */
 label { display: block; font-weight: 700; font-size: .9rem; margin-bottom: 4px; }
-.campo { margin-bottom: 14px; }
+
+/* cada campo es el "marco" donde se posiciona su mensaje de error */
+.campo { position: relative; margin-bottom: 14px; }
 
 input, textarea {
     width: 100%;
@@ -80,12 +90,74 @@ input, textarea {
     outline: none;
 }
 input:focus, textarea:focus { box-shadow: 3px 3px 0 var(--sky-d); }
-input[type=file] { padding: 8px; background: var(--powder); border-style: dashed; }
-textarea { resize: vertical; }
+textarea { resize: none; }
 
-.error { color: #B42318; font-size: .82rem; font-weight: 700; margin-top: 4px; }
-.msg-error {
-    background: var(--err);
+/* campo de archivo */
+input[type=file] { padding: 8px; background: var(--powder); border-style: dashed; font-size: .8rem; }
+input[type=file]::file-selector-button {
+    font: inherit;
+    font-weight: 700;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* input tocado e inválido (clases que agrega Angular) o marcado a mano con .invalido */
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched,
+input.invalido {
+    border-color: var(--danger);
+    background: var(--danger-bg);
+}
+
+/* asterisco de campo obligatorio y su leyenda */
+.req { color: var(--danger); margin-left: 2px; }
+.leyenda { font-size: .82rem; color: var(--ink-soft); margin-bottom: 14px; }
+
+/* ---------- mensajes de error de cada campo ---------- */
+/* por defecto: arriba a la derecha, en la línea de la etiqueta (no mueve el formulario) */
+.error { color: var(--danger); font-size: .82rem; font-weight: 700; margin-top: 4px; }
+
+.campo .error {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    font-size: .78rem;
+    line-height: 1.35rem;
+    white-space: nowrap;
+}
+
+/* si un campo tiene dos errores a la vez, se muestra solo el primero */
+.campo .error ~ .error { display: none; }
+
+/* en celular no entra al lado de la etiqueta: vuelve a ir abajo */
+@media (max-width: 520px) {
+    .campo .error {
+        position: static;
+        white-space: normal;
+        line-height: 1.4;
+        margin-top: 4px;
+    }
+}
+
+/* variante: mensaje largo abajo del input, en un espacio que el campo ya tiene reservado */
+.campo-reserva { padding-bottom: 1.4rem; }
+.campo .error.abajo {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    white-space: normal;
+    line-height: 1.2;
+}
+
+/* ---------- mensajes generales (arriba del formulario) ---------- */
+.msg-error, .msg-ok {
     border: 2px solid var(--ink);
     border-radius: 10px;
     padding: 8px 12px;
@@ -93,16 +165,18 @@ textarea { resize: vertical; }
     font-weight: 700;
     margin-bottom: 14px;
 }
+.msg-error { background: var(--err); }
+.msg-ok { background: var(--ok); }
 
-/* ---------- tarjeta de login y registro ---------- */
+/* ---------- tarjeta de login y registro (tamaño compacto compartido) ---------- */
 .auth-page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 24px;
-    padding: 24px 16px;
+    gap: 14px;
+    padding: 16px;
 }
 .auth-page .logo { font-size: 2rem; }
 
@@ -113,10 +187,33 @@ textarea { resize: vertical; }
     border: var(--bw) solid var(--ink);
     border-radius: var(--r);
     box-shadow: var(--sh);
-    padding: 24px;
+    padding: 18px 22px;
 }
-.auth-card h2 { font-size: 1.9rem; margin-bottom: 6px; }
-.auth-card .sub { color: var(--ink-soft); margin-bottom: 18px; }
+.auth-card h2 { font-size: 1.5rem; margin-bottom: 4px; }
+.auth-card .sub { color: var(--ink-soft); font-size: .88rem; margin-bottom: 12px; }
 
-.switch { text-align: center; margin-top: 16px; font-size: .92rem; }
+/* campos más compactos dentro de la tarjeta */
+.auth-card .campo { margin-bottom: 8px; }
+.auth-card label { font-size: .82rem; margin-bottom: 2px; }
+
+.auth-card input,
+.auth-card textarea {
+    font-size: .9rem;
+    padding: 7px 10px;
+    border-width: 2px;
+    border-radius: 8px;
+}
+.auth-card input[type=file] { padding: 5px 8px; font-size: .75rem; }
+.auth-card input[type=file]::file-selector-button { padding: 3px 8px; }
+
+/* mensajes de error: misma línea que la etiqueta (o abajo, en la variante .abajo) */
+.auth-card .campo .error { font-size: .72rem; line-height: 1.23rem; }
+.auth-card .campo-reserva { padding-bottom: 1.05rem; }
+.auth-card .campo .error.abajo { line-height: 1.1; }
+
+.auth-card .msg-error, .auth-card .msg-ok { padding: 6px 10px; font-size: .84rem; margin-bottom: 10px; }
+.auth-card .leyenda { font-size: .76rem; margin-bottom: 10px; }
+.auth-card .btn { padding: 8px 16px; font-size: .92rem; }
+
+.switch { text-align: center; margin-top: 10px; font-size: .84rem; }
 .switch a { font-weight: 700; }

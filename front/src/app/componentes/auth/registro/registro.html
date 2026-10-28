@@ -11,29 +11,20 @@
         <h3 class="seccion">Datos personales</h3>
         <div class="fila">
             <div class="campo">
-                <label for="nombre">Nombre</label>
+                <label for="nombre">Nombre <span class="req">*</span></label>
                 <input id="nombre" type="text" formControlName="nombre" placeholder="Ingresá tu nombre"/>
-                @if (formRegistro.get('nombre')?.errors?.['required'] && formRegistro.get('nombre')?.touched) {
-                    <p class="error">El nombre es obligatorio.</p>
-                }
             </div>
 
             <div class="campo">
-                <label for="apellido">Apellido</label>
+                <label for="apellido">Apellido <span class="req">*</span></label>
                 <input id="apellido" type="text" formControlName="apellido" placeholder="Ingresá tu apellido"/>
-                @if (formRegistro.get('apellido')?.errors?.['required'] && formRegistro.get('apellido')?.touched) {
-                    <p class="error">El apellido es obligatorio.</p>
-                }
             </div>
         </div>
 
         <div class="fila">
             <div class="campo">
-                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <label for="fechaNacimiento">Fecha de nacimiento <span class="req">*</span></label>
                 <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento"/>
-                @if (formRegistro.get('fechaNacimiento')?.errors?.['required'] && formRegistro.get('fechaNacimiento')?.touched) {
-                    <p class="error">La fecha de nacimiento es obligatoria.</p>
-                }
             </div>
 
             <div class="campo">
@@ -47,12 +38,9 @@
 
         <div class="campo">
             <label for="descripcion">Descripción</label>
-            <textarea id="descripcion" formControlName="descripcion" rows="3" placeholder="Contanos algo sobre vos"></textarea>
-            @if (formRegistro.get('descripcion')?.errors?.['required'] && formRegistro.get('descripcion')?.touched) {
-                <p class="error">La descripción es obligatoria.</p>
-            }
+            <textarea id="descripcion" formControlName="descripcion" rows="2" placeholder="Contanos algo sobre vos"></textarea>
             @if (formRegistro.get('descripcion')?.errors?.['minlength'] && formRegistro.get('descripcion')?.touched) {
-                <p class="error">La descripción necesita al menos 10 caracteres.</p>
+                <p class="error">La descripción debe tener al menos 10 caracteres.</p>
             }
         </div>
 
@@ -60,48 +48,38 @@
         <h3 class="seccion">Datos de acceso</h3>
         <div class="fila">
             <div class="campo">
-                <label for="correo">Correo</label>
+                <label for="correo">Correo <span class="req">*</span></label>
                 <input id="correo" type="email" formControlName="correo" placeholder="Ingresá tu correo electrónico"/>
-                @if (formRegistro.get('correo')?.errors?.['required'] && formRegistro.get('correo')?.touched) {
-                    <p class="error">El correo es obligatorio.</p>
-                }
                 @if (formRegistro.get('correo')?.errors?.['email'] && formRegistro.get('correo')?.touched) {
                     <p class="error">El correo no tiene un formato válido.</p>
                 }
             </div>
 
             <div class="campo">
-                <label for="nombreUsuario">Nombre de usuario</label>
+                <label for="nombreUsuario">Nombre de usuario <span class="req">*</span></label>
                 <input id="nombreUsuario" type="text" formControlName="nombreUsuario" placeholder="Elegí un nombre de usuario"/>
-                @if (formRegistro.get('nombreUsuario')?.errors?.['required'] && formRegistro.get('nombreUsuario')?.touched) {
-                    <p class="error">El nombre de usuario es obligatorio.</p>
-                }
             </div>
         </div>
 
         <div class="fila">
-            <div class="campo">
-                <label for="contrasena">Contraseña</label>
+            <div class="campo campo-reserva">
+                <label for="contrasena">Contraseña <span class="req">*</span></label>
                 <input id="contrasena" type="password" formControlName="contrasena" placeholder="Ingresá una contraseña"/>
-                @if (formRegistro.get('contrasena')?.errors?.['required'] && formRegistro.get('contrasena')?.touched) {
-                    <p class="error">La contraseña es obligatoria.</p>
-                }
                 @if (formRegistro.get('contrasena')?.errors?.['pattern'] && formRegistro.get('contrasena')?.touched) {
-                    <p class="error">Debe tener al menos 8 caracteres, una mayúscula y un número.</p>
+                    <p class="error abajo">Mínimo 8 caracteres, una mayúscula y un número.</p>
                 }
             </div>
 
-            <div class="campo">
-                <label for="confirmarContrasena">Repetir contraseña</label>
-                <input id="confirmarContrasena" type="password" formControlName="confirmarContrasena" placeholder="Repetí la contraseña"/>
-                @if (formRegistro.get('confirmarContrasena')?.errors?.['required'] && formRegistro.get('confirmarContrasena')?.touched) {
-                    <p class="error">Tenés que repetir la contraseña.</p>
-                }
-                @if (formRegistro.hasError('passwordNoCoincide') && formRegistro.get('confirmarContrasena')?.touched) {
-                    <p class="error">Las contraseñas no coinciden.</p>
+            <div class="campo campo-reserva">
+                <label for="confirmarContrasena">Repetir contraseña <span class="req">*</span></label>
+                <input id="confirmarContrasena" type="password" formControlName="confirmarContrasena" placeholder="Repetí la contraseña" [class.invalido]="formRegistro.hasError('passwordNoCoincide') && formRegistro.get('confirmarContrasena')?.touched"/>
+                @if (formRegistro.hasError('passwordNoCoincide') && formRegistro.get('confirmarContrasena')?.value && formRegistro.get('confirmarContrasena')?.touched) {
+                    <p class="error abajo">Las contraseñas no coinciden.</p>
                 }
             </div>
         </div>
+
+        <p class="leyenda"><span class="req">*</span> Campos obligatorios</p>
 
         <button type="submit" class="btn btn-primary btn-block" [disabled]="formRegistro.invalid || cargando()">
             @if (cargando()) {
