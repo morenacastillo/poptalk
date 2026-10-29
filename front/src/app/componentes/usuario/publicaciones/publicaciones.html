@@ -9,5 +9,5 @@
 }
 
 @for (publicacion of publicaciones(); track publicacion._id) {
-    <app-card-publicacion [publicacion]="publicacion" />
+    <app-card-publicacion [publicacion]="publicacion" (eliminada)="obtenerPublicacionesHome()" />
 }

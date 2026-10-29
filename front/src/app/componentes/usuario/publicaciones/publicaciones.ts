@@ -5,8 +5,6 @@ import { DatePipe } from '@angular/common';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 import { ModalPublicacion } from '../modal-publicacion/modal-publicacion';
 
-
-
 @Component({
   imports: [CardPublicacion, ModalPublicacion],
   selector: 'app-publicaciones',

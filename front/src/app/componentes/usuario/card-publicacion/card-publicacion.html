@@ -20,5 +20,11 @@
 
     <div class="post-foot">
         <button type="button" class="btn btn-sm">♥ Me gusta · {{ publicacion().likes.length }}</button>
+
+        @if (puedeEliminar()) {
+            <button type="button" class="btn btn-sm" (click)="borrarPubliacion()">Eliminar</button>
+        }
     </div>
+
+    
 </article>

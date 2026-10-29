@@ -20,4 +20,8 @@ export class HomePublicaciones {
     crearPubliacion(datos: FormData) {
         return this.http.post<DatosPublicacion>(this.url, datos, { withCredentials: true });
     }
+
+    bajaPublicacion(idPublicacion: string) {
+        return this.http.delete<DatosPublicacion>(this.url + '/' + idPublicacion, { withCredentials: true });
+    }
 }
