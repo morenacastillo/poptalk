@@ -13,7 +13,5 @@ export class CreatePublicacionDto {
     @IsOptional()
     imagen: string;
 
-    @IsString({ message: 'El autor tiene que ser texto' })
-    @IsNotEmpty({ message: 'El autor es obligatorio' })
-    autor: string;
+    
 }

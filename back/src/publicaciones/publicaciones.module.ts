@@ -4,6 +4,7 @@ import { PublicacionesService } from './publicaciones.service.js';
 import { PublicacionesController } from './publicaciones.controller.js';
 import { PublicacionSchema } from './entities/publicacion.entity.js';
 import { ComentarioSchema } from './entities/comentarios.entity.js';
+import { FileService } from '../file/file/file.service.js';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { ComentarioSchema } from './entities/comentarios.entity.js';
     MongooseModule.forFeature([{name: 'Comentario', schema: ComentarioSchema}]),
   ],
   controllers: [PublicacionesController],
-  providers: [PublicacionesService],
+  providers: [PublicacionesService, FileService],
 })
 export class PublicacionesModule {}

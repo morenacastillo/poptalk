@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Schema as MongooseSchema, Types } from "mongoose";
 
 export type PublicacionDocument = HydratedDocument<Publicacion>
 
@@ -15,8 +15,8 @@ export class Publicacion {
     @Prop()
     imagen: string;
 
-    @Prop({required: true})
-    autor: string;
+    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Usuario', required: true })
+        autor: Types.ObjectId;
 
     @Prop({default: Date.now})
     fechaPublicacion: Date;

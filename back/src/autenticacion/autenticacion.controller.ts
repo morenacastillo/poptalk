@@ -27,9 +27,9 @@ export class AutenticacionController {
 
   @Post('registro')
   @UseInterceptors(FileInterceptor('imagen', { storage: memoryStorage() }))
-  async create(@UploadedFile() imagen: Express.Multer.File,
-              @Body() createAuthDto: CreateAutenticacionDto,
-              @Res({passthrough: true}) res: Response) {
+  async create(@Body() createAuthDto: CreateAutenticacionDto,
+              @Res({passthrough: true}) res: Response,
+              @UploadedFile() imagen: Express.Multer.File) {
   const result = await this.authService.registro(createAuthDto, imagen);
   return result;
 }
