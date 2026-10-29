@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { CreatePublicacionDto } from './dto/create-publicacion.dto.js';
 import { UpdatePublicacionDto } from './dto/update-publicacion.dto.js';
 import { InjectModel } from '@nestjs/mongoose';
@@ -37,13 +37,14 @@ export class PublicacionesService {
   }
 
   findAll() {
-    return this.publicacionModel.find().populate('autor', 'nombreUsuario imagen');
-  }
+    return this.publicacionModel.find({ habilitado: true }).populate('autor', 'nombreUsuario imagen');
+}
 
   findByUser(autor: string) {
     return this.publicacionModel
       .find({ autor: autor, habilitado: true })
       .sort({ fechaPublicacion: -1 })
+      .limit(3)
       .populate('autor', 'nombreUsuario imagen');
   }
 
@@ -55,7 +56,21 @@ export class PublicacionesService {
     return `This action updates a #${id} publicacione`;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} publicacione`;
+
+  async remove(id: string, usuarioId: string, perfil: string) {
+    const publicacion = await this.publicacionModel.findById(id)
+    if(!publicacion || !publicacion.habilitado) {
+      throw new NotFoundException('La publicación no existe');
+    }
+
+    const esAutor = publicacion.autor.toString() === usuarioId
+    if(!esAutor && perfil !== 'administrador') {
+      throw new ForbiddenException('No podés eliminar esta publicación');
+    }
+
+    publicacion.habilitado = false
+    await publicacion.save()
+
+    return publicacion
   }
 }

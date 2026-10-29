@@ -75,7 +75,7 @@ export class AutenticacionService {
 
   //payload son los datos que viajan adentro del token. signAsync los firma con la clave secreta y devuelve el token ya armado.
   generateToken(usuario: UsuarioDocument) {
-    const payload = {correo: usuario.correo, sub: usuario._id}
+    const payload = {correo: usuario.correo, sub: usuario._id, perfil: usuario.perfil}
     return this.jwtService.signAsync(payload)
   }
 

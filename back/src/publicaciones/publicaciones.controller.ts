@@ -34,13 +34,12 @@ export class PublicacionesController {
   findByUser(@Param('id') id: string) {
     return this.publicacionesService.findByUser(id);
   }
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePublicacioneDto: UpdatePublicacionDto) {
-    return this.publicacionesService.update(id, updatePublicacioneDto);
+  
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  remove(@Param('id') id: string,
+        @Req() req: Request & { user: { sub: string; perfil: string } }) {
+    return this.publicacionesService.remove(id, req.user.sub, req.user.perfil);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.publicacionesService.remove(id);
-  }
 }
