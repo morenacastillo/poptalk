@@ -6,7 +6,7 @@ export interface Usuario {
     correo: string;
     fechaNacimiento: string;
     descripcion: string;
-    imagen?: string;
+    imagen: string;
     perfil: string;
     habilitado: boolean;
 }

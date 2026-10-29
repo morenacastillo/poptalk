@@ -1,1 +1,13 @@
-<p>publicaciones works!</p>
+@if (error()) {
+    <p class="msg-error">{{ error() }}</p>
+}
+
+<button class="btn" (click)="modalAbierto.set(true)">Contanos tu opinión...</button>
+
+@if (modalAbierto()) {
+    <app-modal-publicacion (cerrar)="modalAbierto.set(false)" (creada)="subirPublicacion()" />
+}
+
+@for (publicacion of publicaciones(); track publicacion._id) {
+    <app-card-publicacion [publicacion]="publicacion" />
+}

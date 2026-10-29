@@ -32,6 +32,16 @@
 .nav-links a.on { background: var(--sky); border-color: var(--ink); }
 
 .me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 700;
     font-size: .9rem;
+}
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: var(--bw) solid var(--ink);
+    object-fit: cover;
 }

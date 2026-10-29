@@ -9,6 +9,8 @@
 
         <div class="me">
             <span>&#64;{{ usuario()?.nombreUsuario }}</span>
+            <img class="avatar" [src]="usuario()?.imagen" alt="Foto de perfil" />
+    
         </div>
 
         @if (usuario()?.perfil === 'administrador') {

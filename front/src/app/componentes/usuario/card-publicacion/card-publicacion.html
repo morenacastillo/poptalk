@@ -1,0 +1,24 @@
+<article class="post">
+    <div class="post-head">
+        <div class="avatar">
+            @if (publicacion().autor?.imagen) {
+                <img [src]="publicacion().autor.imagen" alt="Foto de perfil" />
+            }
+        </div>
+        <div class="who">
+            <b>{{ publicacion().autor?.nombreUsuario }}</b>
+            <small>{{ publicacion().fechaPublicacion | date:'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+    </div>
+
+    <h3>{{ publicacion().titulo }}</h3>
+    <p>{{ publicacion().mensaje }}</p>
+
+    @if (publicacion().imagen) {
+        <img class="cover" [src]="publicacion().imagen" alt="Imagen de la publicación" />
+    }
+
+    <div class="post-foot">
+        <button type="button" class="btn btn-sm">♥ Me gusta · {{ publicacion().likes.length }}</button>
+    </div>
+</article>

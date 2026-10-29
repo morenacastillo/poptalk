@@ -59,12 +59,12 @@ export class Registro {
 
     this.auth.registro(datos).subscribe({
     next: () => {
-    this.cargando.set(false);
-    this.formRegistro.reset();
-    this.imagen = null;
-    this.imagenNombre.set('');
-    inputImagen.value = '';
-    this.guardadoOk.set(true);
+      this.cargando.set(false);
+      this.formRegistro.reset();
+      this.imagen = null;
+      this.imagenNombre.set('');
+      inputImagen.value = '';
+      this.guardadoOk.set(true);
     setTimeout(() => this.guardadoOk.set(false), 3000);
   },
     error: (err) => {
@@ -80,8 +80,8 @@ export class Registro {
     const input = event.target as HTMLInputElement;
     const archivo = input.files?.[0] ?? null;
 
-    if (archivo && archivo.size > 2 * 1024 * 1024) {
-      this.error.set('La imagen no puede pesar más de 2 MB.');
+    if (archivo && archivo.size > 500 * 1024) {
+      this.error.set('La imagen no puede pesar más de 500 KB.');
       input.value = '';
       this.imagen = null;
       this.imagenNombre.set('');

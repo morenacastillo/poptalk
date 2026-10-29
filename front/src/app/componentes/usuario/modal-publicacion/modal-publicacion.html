@@ -1,0 +1,28 @@
+
+<div class="overlay">
+    <form class="modal" [formGroup]="formPublicacion" (ngSubmit)="publicar()">
+        <h2>Nueva publicación</h2>
+
+        @if (error()) {
+        <p class="msg-error">{{ error() }}</p>
+        }
+
+        <label for="titulo">Título</label>
+        <input id="titulo" formControlName="titulo" placeholder="Mi opinión en una frase" />
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" formControlName="mensaje" placeholder="Explicá tu argumento..."></textarea>
+
+        <label for="imagen">Imagen (opcional)</label>
+        <input id="imagen" type="file" accept="image/*" (change)="seleccionarImagen($event)" />
+        @if (imagenNombre()) {
+        <small>Seleccionada: {{ imagenNombre() }}</small>
+        }
+        <small>Máximo 500 KB.</small>
+
+        <div class="acciones">
+        <button type="button" class="btn" (click)="cerrar.emit()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="formPublicacion.invalid || cargando()">Publicar</button>
+        </div>
+    </form>
+</div>
