@@ -1,21 +1,42 @@
-<h2>{{ usuario?.nombre }} {{ usuario?.apellido }}</h2>
-<p>{{ usuario?.correo }}</p>
-<p>@{{ usuario?.nombreUsuario }}</p>
-<p>{{ usuario?.descripcion }}</p>
-@if (usuario?.imagen) {
-    <img [src]="usuario?.imagen" alt="Foto de perfil" />
-}
+<section class="perfil-card">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
 
-<button class="btn" (click)="modalAbierto.set(true)">Contanos tu opinión...</button>
+    <div class="perfil-cuerpo">
+        @if (usuario?.imagen) {
+            <img class="foto-perfil" [src]="usuario?.imagen" alt="Foto de perfil" />
+        }
 
+        <div class="perfil-info">
+            <h2>{{ usuario?.nombre }} {{ usuario?.apellido }}</h2>
+            <p class="user">&#64;{{ usuario?.nombreUsuario }}</p>
+            <p class="bio">{{ usuario?.descripcion }}</p>
+
+            <div class="datos">
+                <div class="dato">
+                    <small>Correo</small>
+                    <b>{{ usuario?.correo }}</b>
+                </div>
+                <div class="dato">
+                    <small>Fecha de nacimiento</small>
+                    <b>{{ usuario?.fechaNacimiento | date:'dd/MM/yyyy':'UTC' }}</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-card-publicar (abrir)="modalAbierto.set(true)" />
 @if (modalAbierto()) {
     <app-modal-publicacion (cerrar)="modalAbierto.set(false)" (creada)="subirPublicacion()" />
 }
 
-<br>
-<hr>
-
-
 @for (publicacion of publicacionesUsuario(); track publicacion._id) {
-    <app-card-publicacion [publicacion]="publicacion" />
+    <app-card-publicacion [publicacion]="publicacion"
+                        (eliminada)="obtenerPublicacionesPerfil()"
+                        (cambiada)="obtenerPublicacionesPerfil()" />
+} @empty {
+    <div class="vacio">
+        <p class="vacio-titulo">Todavía no publicaste nada</p>
+        <p class="vacio-texto">Contanos tu opinión para empezar.</p>
+    </div>
 }

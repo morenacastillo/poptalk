@@ -2,15 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { DatosPublicacion } from '../modelos/publicacion';
+import { RespuestaPublicaciones } from '../modelos/publicacion';
 
 
 @Service()
 export class HomePublicaciones {
     private http = inject(HttpClient);
+    
     private url = environment.apiUrl + '/publicaciones';
 
-    obtenerPublicaciones() {
-        return this.http.get<DatosPublicacion[]>(this.url, { withCredentials: true });
+    obtenerPublicaciones(offset: number = 0, limit: number = 10, orden: string = 'fecha') {
+        return this.http.get<RespuestaPublicaciones>(
+            this.url + '?offset=' + offset + '&limit=' + limit + '&orden=' + orden,
+            { withCredentials: true });
     }
 
     obtenerPublicacionesPorUsuario(idAutor: string) {
@@ -23,5 +27,13 @@ export class HomePublicaciones {
 
     bajaPublicacion(idPublicacion: string) {
         return this.http.delete<DatosPublicacion>(this.url + '/' + idPublicacion, { withCredentials: true });
+    }
+
+    darMeGusta(idPublicacion: string) {
+        return this.http.post<DatosPublicacion>(this.url + '/' + idPublicacion + '/megusta', {}, {withCredentials: true})
+    }
+
+    quitarMeGusta(idPublicacion: string) {
+        return this.http.delete<DatosPublicacion>(this.url + '/' + idPublicacion + '/megusta',{withCredentials: true})
     }
 }

@@ -6,9 +6,10 @@ import { DatosPublicacion } from '../../../modelos/publicacion';
 import { DatePipe } from '@angular/common';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 import { ModalPublicacion } from '../modal-publicacion/modal-publicacion';
+import { CardPublicar } from '../card-publicar/card-publicar';
 
 @Component({
-  imports: [CardPublicacion, ModalPublicacion],
+  imports: [CardPublicacion, ModalPublicacion, CardPublicar, DatePipe],
   selector: 'app-perfil',
   styleUrl: './perfil.css',
   templateUrl: './perfil.html',

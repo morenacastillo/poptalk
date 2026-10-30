@@ -30,3 +30,15 @@ hr {
     font-size: 1rem;
     margin-bottom: 8px;
 }
+
+/* aviso de registro exitoso: flota abajo y no ocupa lugar en la tarjeta */
+.aviso-flotante {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    z-index: 50;
+    margin: 0;
+    padding: 10px 16px;
+    box-shadow: var(--sh);
+}

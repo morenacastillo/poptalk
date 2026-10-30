@@ -1,0 +1,43 @@
+
+.orden {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.lbl {
+    font-weight: 700;
+    font-size: .9rem;
+    margin-right: 4px;
+}
+
+.tab {
+    font: inherit;
+    font-weight: 700;
+    font-size: .88rem;
+    padding: 5px 14px;
+    border: 2px solid var(--ink);
+    border-radius: 99px;
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.tab:hover {
+    background: var(--sky);
+}
+
+.tab.on {
+    background: var(--ink);
+    color: var(--white);
+}
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    margin: 20px 0;
+}

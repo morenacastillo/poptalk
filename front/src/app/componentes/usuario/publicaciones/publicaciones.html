@@ -2,12 +2,26 @@
     <p class="msg-error">{{ error() }}</p>
 }
 
-<button class="btn" (click)="modalAbierto.set(true)">Contanos tu opinión...</button>
+<app-card-publicar (abrir)="modalAbierto.set(true)" />
 
 @if (modalAbierto()) {
     <app-modal-publicacion (cerrar)="modalAbierto.set(false)" (creada)="subirPublicacion()" />
 }
 
+<div class="orden">
+    <span class="lbl">Ordenar por:</span>
+    <button type="button" class="tab" [class.on]="orden() === 'fecha'" (click)="cambiarOrden('fecha')">Más recientes</button>
+    <button type="button" class="tab" [class.on]="orden() === 'megusta'" (click)="cambiarOrden('megusta')">Más me gusta</button>
+</div>
+
 @for (publicacion of publicaciones(); track publicacion._id) {
-    <app-card-publicacion [publicacion]="publicacion" (eliminada)="obtenerPublicacionesHome()" />
+    <app-card-publicacion [publicacion]="publicacion"
+                        (eliminada)="obtenerPublicacionesHome()"
+                        (cambiada)="obtenerPublicacionesHome()" />
 }
+
+<div class="paginacion">
+    <button type="button" class="btn btn-sm" (click)="anterior()" [disabled]="pagina() === 0">Anterior</button>
+    <span>Página {{ pagina() + 1 }}</span>
+    <button type="button" class="btn btn-sm" (click)="siguiente()" [disabled]="!hayMas()">Siguiente</button>
+</div>

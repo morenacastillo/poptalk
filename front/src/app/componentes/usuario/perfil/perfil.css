@@ -1,0 +1,122 @@
+
+.perfil-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--sky);
+    border: var(--bw) solid var(--ink);
+    border-radius: var(--r);
+    box-shadow: var(--sh);
+    padding: 32px;
+    margin-bottom: 28px;
+}
+
+/* lunares decorativos */
+.perfil-card i {
+    position: absolute;
+    border: var(--bw) solid var(--ink);
+    border-radius: 50%;
+}
+.perfil-card i:nth-child(1)  { width: 110px; height: 110px; background: var(--pink);   right: 40px;  top: -35px; }
+.perfil-card i:nth-child(2)  { width: 56px;  height: 56px;  background: var(--butter); right: 170px; top: 80px; }
+.perfil-card i:nth-child(3)  { width: 80px;  height: 80px;  background: var(--white);  right: 24px;  bottom: -25px; }
+.perfil-card i:nth-child(4)  { width: 44px;  height: 44px;  background: var(--butter); left: 24px;   bottom: 18px; }
+.perfil-card i:nth-child(5)  { width: 70px;  height: 70px;  background: var(--pink);   left: -20px;  top: -20px; }
+.perfil-card i:nth-child(6)  { width: 36px;  height: 36px;  background: var(--sky-d);  left: 120px;  top: 14px; }
+.perfil-card i:nth-child(7)  { width: 90px;  height: 90px;  background: var(--butter); left: 38%;    bottom: -45px; }
+.perfil-card i:nth-child(8)  { width: 30px;  height: 30px;  background: var(--pink);   right: 300px; top: 20px; }
+.perfil-card i:nth-child(9)  { width: 64px;  height: 64px;  background: var(--sky-d);  right: 90px;  top: 150px; }
+.perfil-card i:nth-child(10) { width: 40px;  height: 40px;  background: var(--white);  left: 55%;    top: -16px; }
+
+/* el contenido va por encima de los lunares */
+.perfil-cuerpo {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.foto-perfil {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    border: 4px solid var(--ink);
+    object-fit: cover;
+    background: var(--pink);
+    display: block;
+    flex: none;
+}
+
+.perfil-info {
+    flex: 1;
+    min-width: 260px;
+}
+
+.perfil-info h2 {
+    font-family: var(--f-title);
+    font-size: 2rem;
+}
+
+.user {
+    font-weight: 700;
+}
+
+.bio {
+    margin: 14px 0;
+}
+
+.datos {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.dato {
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 8px 14px;
+}
+
+.dato small {
+    display: block;
+    text-transform: uppercase;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: var(--ink-soft);
+}
+
+.dato b {
+    font-size: .95rem;
+}
+
+/* cuando el usuario todavía no publicó nada */
+.vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 4px;
+    min-height: 150px;
+    max-width: 380px;
+    margin: 100px auto 0;
+    padding: 18px 24px;
+    background: var(--white);
+    border: var(--bw) dashed var(--ink);
+    border-radius: var(--r);
+}
+
+.vacio-titulo {
+    font-family: var(--f-title);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.vacio-texto {
+    font-size: .9rem;
+    color: var(--ink-soft);
+}

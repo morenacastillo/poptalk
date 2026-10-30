@@ -88,9 +88,10 @@
                 Crear cuenta
             }
         </button>
-        @if (guardadoOk()) {
-            <p class="msg-ok">¡Registro exitoso! Ya podés iniciar sesión.</p>
-        }
         <p class="switch">¿Ya tenés cuenta? <a routerLink="/login">Ingresá</a></p>
     </form>
+
+    @if (guardadoOk()) {
+        <p class="msg-ok aviso-flotante">¡Registro exitoso! Ya podés iniciar sesión.</p>
+    }
 </div>

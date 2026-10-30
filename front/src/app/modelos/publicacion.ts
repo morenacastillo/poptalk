@@ -1,3 +1,8 @@
+export interface RespuestaPublicaciones {
+    publicaciones: DatosPublicacion[];
+    total: number;
+}
+
 export interface AutorPublicacion {
     _id: string;
     nombreUsuario: string;
