@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UploadedFile, UseInterceptors, Query  } from '@nestjs/common';
 import { PublicacionesService } from './publicaciones.service.js';
 import { CreatePublicacionDto } from './dto/create-publicacion.dto.js';
 import { UpdatePublicacionDto } from './dto/update-publicacion.dto.js';
@@ -20,9 +20,20 @@ export class PublicacionesController {
     return this.publicacionesService.create(createPublicacionDto, req.user.sub, imagen);
   }
 
+  @Post(':id/megusta')
+  @UseGuards(AuthGuard)
+  darMeGusta(@Param('id') id: string,
+              @Req() req: Request & {user: {sub:string} } ) {
+                return this.publicacionesService.darMeGusta(id, req.user.sub)
+              }
+
+
+
   @Get()
-  findAll() {
-    return this.publicacionesService.findAll();
+  findAll(@Query('orden') orden?: string,
+          @Query('offset') offset?: string,
+          @Query('limit') limit?: string) {
+    return this.publicacionesService.findAll(orden, Number(offset) || 0, Number(limit) || 10);
   }
 
   @Get(':id')
@@ -34,6 +45,8 @@ export class PublicacionesController {
   findByUser(@Param('id') id: string) {
     return this.publicacionesService.findByUser(id);
   }
+
+
   
   @Delete(':id')
   @UseGuards(AuthGuard)
@@ -42,4 +55,12 @@ export class PublicacionesController {
     return this.publicacionesService.remove(id, req.user.sub, req.user.perfil);
   }
 
+  @Delete(':id/megusta')
+  @UseGuards(AuthGuard)
+  quitarMeGusta(@Param('id') id: string,
+              @Req() req: Request & {user: {sub:string} } ) {
+                return this.publicacionesService.quitarMeGusta(id, req.user.sub)
+              }
+
+  
 }

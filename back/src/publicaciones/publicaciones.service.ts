@@ -36,9 +36,37 @@ export class PublicacionesService {
     }
   }
 
-  findAll() {
-    return this.publicacionModel.find({ habilitado: true }).populate('autor', 'nombreUsuario imagen');
-}
+  async findAll(orden: string = "fecha", offset: number = 0, limit: number) { // devuelve 5 x pagina (offset 0 / 1 /2)
+    const filtro = {habilitado: true}
+    let publicaciones;
+
+    if(orden === 'megusta') {
+      publicaciones = await this.publicacionModel.aggregate([
+      { $match: filtro },
+      { $addFields: { cantidadLikes: { $size: '$likes' } } },
+      { $sort: { cantidadLikes: -1, fechaPublicacion: -1 } },
+      { $skip: offset * limit },
+      { $limit: limit },
+      ]);
+      publicaciones = await this.publicacionModel.populate(publicaciones, {
+        path: 'autor',
+        select: 'nombreUsuario imagen'
+      });
+
+    } else {
+      publicaciones = await this.publicacionModel
+      .find(filtro)
+      .sort({ fechaPublicacion: -1})
+      .skip(offset * limit) // offset 0 = 0 x 5 = 5 -> trae las primeras 5 (no saltea ninguna)
+                            // offset 1 = 1 x 5 = 10 -> trae de 6 a 10 (se saltea de la 1 a 5)
+                            // offset 2 = 2 x 5 = 15 -> trae de 11 a 15 (se saltea de la 1 a 10)
+      .limit(limit)
+      .populate('autor', 'nombreUsuario imagen')
+    }
+      const total = await this.publicacionModel.countDocuments(filtro);
+      return { publicaciones, total };
+  }
+      
 
   findByUser(autor: string) {
     return this.publicacionModel
@@ -48,6 +76,43 @@ export class PublicacionesService {
       .populate('autor', 'nombreUsuario imagen');
   }
 
+  async darMeGusta(id: string, usuarioId: string) {
+    const publicacion = await this.publicacionModel.findById(id)
+    if (!publicacion || !publicacion.habilitado) {
+      throw new NotFoundException('La publicación no existe');
+    }
+
+    if(publicacion.likes.includes(usuarioId)) {
+      throw new BadRequestException('Ya le diste me gusta a esta publicación');
+    }
+
+    publicacion.likes.push(usuarioId);
+    await publicacion.save()
+    return publicacion;
+  }
+
+  async quitarMeGusta(id: string, usuarioId: string) {
+    const publicacion = await this.publicacionModel.findById(id)
+    if (!publicacion || !publicacion.habilitado) {
+      throw new NotFoundException('La publicación no existe');
+    }
+
+    if(!publicacion.likes.includes(usuarioId)) {
+      throw new BadRequestException('Aun no le diste me gusta a esta publicación');
+    }
+
+    const likesNuevos: string[] = [];
+    for (const like of publicacion.likes) {
+      if (like !== usuarioId) {
+        likesNuevos.push(like);
+      }
+    }
+    publicacion.likes = likesNuevos;
+    await publicacion.save();
+    return publicacion;
+    }
+
+    
   findOne(id: string) {
     return `This action returns a #${id} publicacione`;
   }

@@ -3,7 +3,7 @@ import { HydratedDocument, Schema as MongooseSchema, Types } from "mongoose";
 
 export type PublicacionDocument = HydratedDocument<Publicacion>
 
-@Schema()
+@Schema({ collection: 'publicaciones' })
 export class Publicacion {
     
     @Prop({required: true})
