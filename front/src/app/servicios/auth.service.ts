@@ -5,7 +5,7 @@ import { DatosLogin, RespuestaAuth } from '../modelos/auth';
 import { Usuario } from '../modelos/usuario';
 
 @Service()
-export class Auth {
+export class AuthService {
     private http = inject(HttpClient);
     public usuario = signal<Usuario | null>(this.leerUsuario());
     private url = environment.apiUrl + '/autenticacion'

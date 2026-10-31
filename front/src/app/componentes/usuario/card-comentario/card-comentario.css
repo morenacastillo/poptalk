@@ -1,0 +1,59 @@
+:host {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.comentario {
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 10px 14px;
+    overflow-wrap: anywhere;
+}
+
+b {
+    margin-right: 8px;
+}
+
+small {
+    color: var(--ink-soft);
+}
+
+/* el segundo small es "(editado)", va después de la fecha */
+small + small {
+    margin-left: 6px;
+    font-style: italic;
+}
+
+p {
+    margin: 6px 0;
+}
+
+.post-foot {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.btn-eliminar {
+    margin-left: auto;
+    background: var(--err);
+    color: var(--ink);
+}
+
+/* formulario de edición */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+form textarea {
+    flex: 1 1 100%;
+    min-height: 60px;
+}
+
+.msg-error {
+    margin-top: 8px;
+}

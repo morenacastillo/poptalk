@@ -2,8 +2,6 @@
     <p class="msg-error">{{ error() }}</p>
 }
 
-<app-card-publicar (abrir)="modalAbierto.set(true)" />
-
 @if (modalAbierto()) {
     <app-modal-publicacion (cerrar)="modalAbierto.set(false)" (creada)="subirPublicacion()" />
 }
@@ -12,6 +10,7 @@
     <span class="lbl">Ordenar por:</span>
     <button type="button" class="tab" [class.on]="orden() === 'fecha'" (click)="cambiarOrden('fecha')">Más recientes</button>
     <button type="button" class="tab" [class.on]="orden() === 'megusta'" (click)="cambiarOrden('megusta')">Más me gusta</button>
+    <button type="button" class="btn btn-publicar" (click)="modalAbierto.set(true)">+ Nueva publicación</button>
 </div>
 
 @for (publicacion of publicaciones(); track publicacion._id) {

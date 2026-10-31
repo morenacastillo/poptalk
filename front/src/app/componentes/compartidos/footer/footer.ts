@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '../../../servicios/auth';
+import { AuthService } from '../../../servicios/auth.service';
 
 @Component({
   imports: [],
@@ -9,7 +9,7 @@ import { Auth } from '../../../servicios/auth';
   templateUrl: './footer.html',
 })
 export class Footer {
-  private auth = inject(Auth);
+  private auth = inject(AuthService);
   private router = inject(Router);
 
   usuario = this.auth.usuario;

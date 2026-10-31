@@ -1,19 +1,18 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { DatosPublicacion } from '../../../modelos/publicacion';
-import { HomePublicaciones } from '../../../servicios/homePublicaciones';
+import { PublicacionesService } from '../../../servicios/publicaciones.service';
 import { DatePipe } from '@angular/common';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 import { ModalPublicacion } from '../modal-publicacion/modal-publicacion';
-import { Auth } from '../../../servicios/auth';
-import { CardPublicar } from '../card-publicar/card-publicar';
+import { AuthService } from '../../../servicios/auth.service';
 
 @Component({
-  imports: [CardPublicacion, ModalPublicacion, CardPublicar],
-  selector: 'app-publicaciones',
-  styleUrl: './publicaciones.css',
-  templateUrl: './publicaciones.html',
+  imports: [CardPublicacion, ModalPublicacion],
+  selector: 'app-home',
+  styleUrl: './home.css',
+  templateUrl: './home.html',
 })
-export class Publicaciones {
+export class Home {
   publicaciones = signal<DatosPublicacion[]>([])
   error = signal('');
   modalAbierto = signal(false);
@@ -22,7 +21,7 @@ export class Publicaciones {
   hayMas = signal(false);
   orden = signal('fecha');
 
-  constructor(private publicacionesService: HomePublicaciones, private auth: Auth) {}
+  constructor(private publicacionesService: PublicacionesService, private auth: AuthService) {}
 
   ngOnInit() {
     this.obtenerPublicacionesHome()

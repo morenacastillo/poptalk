@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PasswordValidator } from '../validators/password-validator';
-import { Auth } from '../../../servicios/auth';
+import { AuthService } from '../../../servicios/auth.service';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink],
@@ -30,7 +30,7 @@ export class Registro {
   imagenNombre = signal('');
 
 
-  constructor (private auth: Auth) {}
+  constructor (private auth: AuthService) {}
 
   registro(inputImagen: HTMLInputElement) {
     if (this.formRegistro.invalid) {

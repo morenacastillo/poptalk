@@ -1,0 +1,29 @@
+@if (!resumen()) {
+    <form class="nuevo-comentario" [formGroup]="formComentario" (ngSubmit)="crearComentario()">
+        <textarea formControlName="mensaje" placeholder="Escribí un comentario..."></textarea>
+        <div class="acciones">
+            <small>{{ formComentario.controls.mensaje.value?.length || 0 }}/300</small>
+            <button type="submit" class="btn btn-sm" [disabled]="formComentario.invalid">Comentar</button>
+        </div>
+    </form>
+}
+
+@if (error()) {
+    <p class="msg-error">{{ error() }}</p>
+}
+
+@for (comentario of comentarios(); track comentario._id) {
+    <app-card-comentario [comentario]="comentario"
+                        (modificado)="recargar()"
+                        (eliminada)="recargar()" />
+} @empty {
+    <p class="vacio">Todavía no hay comentarios.</p>
+}
+
+@if (hayMas()) {
+    @if (resumen()) {
+        <a [routerLink]="['/home/publicacion', idPublicacion()]">Ver todos los comentarios</a>
+    } @else {
+        <button type="button" class="btn btn-sm" (click)="cargarMas()">Cargar más</button>
+    }
+}

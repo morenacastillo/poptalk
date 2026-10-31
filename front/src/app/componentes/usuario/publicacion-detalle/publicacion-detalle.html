@@ -1,0 +1,6 @@
+@if (publicacion()) {
+    <app-card-publicacion [publicacion]="publicacion()!" [enDetalle]="true" />
+}
+@if (error()) {
+    <p>{{ error() }}</p>
+}

@@ -1,15 +1,14 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { Auth } from '../../../servicios/auth';
+import { AuthService } from '../../../servicios/auth.service';
 import { Usuario } from '../../../modelos/usuario';
-import { HomePublicaciones } from '../../../servicios/homePublicaciones';
+import { PublicacionesService } from '../../../servicios/publicaciones.service';
 import { DatosPublicacion } from '../../../modelos/publicacion';
 import { DatePipe } from '@angular/common';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 import { ModalPublicacion } from '../modal-publicacion/modal-publicacion';
-import { CardPublicar } from '../card-publicar/card-publicar';
 
 @Component({
-  imports: [CardPublicacion, ModalPublicacion, CardPublicar, DatePipe],
+  imports: [CardPublicacion, ModalPublicacion, DatePipe],
   selector: 'app-perfil',
   styleUrl: './perfil.css',
   templateUrl: './perfil.html',
@@ -21,7 +20,7 @@ export class Perfil implements OnInit {
   error = signal('');
   modalAbierto = signal(false);
 
-  constructor(private auth: Auth, private publicacionesService: HomePublicaciones) {}
+  constructor(private auth: AuthService, private publicacionesService: PublicacionesService) {}
 
   ngOnInit() {
     this.usuario = this.auth.usuario();

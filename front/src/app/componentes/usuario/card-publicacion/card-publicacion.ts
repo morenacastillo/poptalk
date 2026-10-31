@@ -1,12 +1,14 @@
 import { Component, input, output, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { DatosPublicacion } from '../../../modelos/publicacion';
-import { HomePublicaciones } from '../../../servicios/homePublicaciones';
-import { Auth } from '../../../servicios/auth';
+import { PublicacionesService } from '../../../servicios/publicaciones.service';
+import { AuthService } from '../../../servicios/auth.service';
+import { RouterLink } from '@angular/router';
+import { Comentarios } from '../comentarios/comentarios';
 
 
 @Component({
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink, Comentarios],
   selector: 'app-card-publicacion',
   styleUrl: './card-publicacion.css',
   templateUrl: './card-publicacion.html',
@@ -17,9 +19,10 @@ export class CardPublicacion {
   eliminada = output<void>();
   error = signal('')
   cambiada = output<void>();
+  enDetalle = input(false);
   
 
-  constructor(private publicacionesService: HomePublicaciones, private auth: Auth) {}
+  constructor(private publicacionesService: PublicacionesService, private auth: AuthService) {}
 
   borrarPubliacion() {
     this.publicacionesService.bajaPublicacion(this.publicacion()._id).subscribe({

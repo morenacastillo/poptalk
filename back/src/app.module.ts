@@ -7,6 +7,7 @@ import { UsuariosModule } from './usuarios/usuarios.module.js';
 import { PublicacionesModule } from './publicaciones/publicaciones.module.js';
 import { AutenticacionModule } from './autenticacion/autenticacion.module.js';
 import { AuthenticationModule } from '@nestjs/authentication';
+import { ComentariosModule } from './comentarios/comentarios.module.js';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -20,7 +21,8 @@ import { AuthenticationModule } from '@nestjs/authentication';
                 absoluteTtl: '14d',
                 idleTtl: '3d'
             },
-          })
+          }),
+            ComentariosModule
         ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Auth } from '../../../servicios/auth';
+import { AuthService } from '../../../servicios/auth.service';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink],
@@ -19,7 +19,7 @@ export class Login {
   cargando = signal(false);
   guardadoOk = signal(false);
 
-  constructor(private router: Router, private auth: Auth) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   login() {
     if (this.formLogin.invalid) {

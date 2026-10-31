@@ -113,10 +113,19 @@ export class PublicacionesService {
     }
 
     
-  findOne(id: string) {
-    return `This action returns a #${id} publicacione`;
+  async findOne(id: string) {
+    const publicacion = await this.publicacionModel
+      .findById(id)
+      .populate('autor', 'nombreUsuario imagen');
+
+    if (!publicacion || !publicacion.habilitado) {
+      throw new NotFoundException('La publicación no existe');
+    }
+
+    return publicacion;
   }
 
+  
   update(id: string, updatePublicacioneDto: UpdatePublicacionDto) {
     return `This action updates a #${id} publicacione`;
   }

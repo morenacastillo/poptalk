@@ -92,7 +92,6 @@
     font-size: .95rem;
 }
 
-/* cuando el usuario todavía no publicó nada */
 .vacio {
     display: flex;
     flex-direction: column;
@@ -119,4 +118,16 @@
 .vacio-texto {
     font-size: .9rem;
     color: var(--ink-soft);
+}
+
+.mis-publicaciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.mis-publicaciones h3 {
+    font-family: var(--f-title);
+    font-size: 1.3rem;
 }

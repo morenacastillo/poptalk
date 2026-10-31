@@ -1,9 +1,9 @@
 import { CanMatchFn } from '@angular/router';
 import { inject } from '@angular/core';
-import { Auth } from '../servicios/auth';
+import { AuthService } from '../servicios/auth.service';
 
 export const roleAdminGuard: CanMatchFn = (route, segments) => {
-  const auth = inject(Auth);
+  const auth = inject(AuthService);
 
   if (auth.estaLogueado() && auth.usuario()?.perfil === 'administrador') {
     return true;

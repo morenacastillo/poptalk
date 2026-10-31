@@ -1,0 +1,37 @@
+:host {
+    display: block;
+}
+
+.nuevo-comentario {
+    background: var(--white);
+    border: var(--bw) solid var(--ink);
+    border-radius: var(--r);
+    box-shadow: var(--sh);
+    padding: 12px 14px;
+    margin: 16px 0;
+}
+
+.nuevo-comentario textarea {
+    width: 100%;
+    min-height: 70px;
+}
+
+.acciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.acciones small {
+    color: var(--ink-soft);
+}
+
+.vacio {
+    text-align: center;
+    color: var(--ink-soft);
+    padding: 16px;
+    border: var(--bw) dashed var(--ink);
+    border-radius: var(--r);
+    background: var(--white);
+}

@@ -1,0 +1,30 @@
+<article class="comentario">
+    <b>{{ comentario().autor.nombreUsuario }}</b>
+    <small>{{ comentario().fechaCreacion | date:'dd/MM/yyyy HH:mm' }}</small>
+    @if (comentario().modificado) {
+        <small>(editado)</small>
+    }
+
+    @if (editando()) {
+        <form [formGroup]="formEditarComentario" (ngSubmit)="guardarEdicionComentario()">
+            <textarea formControlName="mensaje"></textarea>
+            <button type="button" class="btn btn-sm" (click)="cancelarEdicion()">Cancelar</button>
+            <button type="submit" class="btn btn-sm" [disabled]="formEditarComentario.invalid">Guardar</button>
+        </form>
+    } @else {
+        <p>{{ comentario().mensaje }}</p>
+
+        <div class="post-foot">
+            @if (puedeEditar()) {
+                <button type="button" class="btn btn-sm" (click)="empezarEdicion()">Modificar</button>
+            }
+            @if (puedeEliminar()) {
+                <button type="button" class="btn btn-sm btn-eliminar" (click)="borrarComentario()">Eliminar</button>
+            }
+        </div>
+    }
+
+    @if (error()) {
+        <p class="msg-error">{{ error() }}</p>
+    }
+</article>

@@ -81,6 +81,10 @@ p {
     width: 150px;
 }
 
+.btn-ver {
+    margin-left: auto;
+}
+
 .btn-eliminar {
     margin-left: auto;
     background: var(--err);
@@ -93,4 +97,10 @@ p {
 
 .btn-megusta.liked {
     background: var(--sky);
+}
+
+.seccion-comentarios {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 2px dashed var(--ink);
 }

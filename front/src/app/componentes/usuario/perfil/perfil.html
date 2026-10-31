@@ -25,10 +25,16 @@
     </div>
 </section>
 
-<app-card-publicar (abrir)="modalAbierto.set(true)" />
+
+<div class="mis-publicaciones">
+    <h3>Mis publicaciones</h3>
+    <button type="button" class="btn" (click)="modalAbierto.set(true)">+ Nueva publicación</button>
+</div>
+
 @if (modalAbierto()) {
     <app-modal-publicacion (cerrar)="modalAbierto.set(false)" (creada)="subirPublicacion()" />
 }
+
 
 @for (publicacion of publicacionesUsuario(); track publicacion._id) {
     <app-card-publicacion [publicacion]="publicacion"

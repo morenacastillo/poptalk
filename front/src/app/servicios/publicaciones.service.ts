@@ -6,11 +6,14 @@ import { RespuestaPublicaciones } from '../modelos/publicacion';
 
 
 @Service()
-export class HomePublicaciones {
+export class PublicacionesService {
     private http = inject(HttpClient);
-    
     private url = environment.apiUrl + '/publicaciones';
 
+    obtenerPublicacion(idPublicacion: string) {
+        return this.http.get<DatosPublicacion>(this.url + '/' + idPublicacion, { withCredentials: true });
+    }
+    
     obtenerPublicaciones(offset: number = 0, limit: number = 10, orden: string = 'fecha') {
         return this.http.get<RespuestaPublicaciones>(
             this.url + '?offset=' + offset + '&limit=' + limit + '&orden=' + orden,

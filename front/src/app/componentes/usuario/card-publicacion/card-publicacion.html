@@ -9,6 +9,9 @@
             <b>{{ publicacion().autor?.nombreUsuario }}</b>
             <small>{{ publicacion().fechaPublicacion | date:'dd/MM/yyyy HH:mm' }}</small>
         </div>
+        @if (!enDetalle()) {
+            <a class="btn btn-sm btn-ver" [routerLink]="['/home/publicacion', publicacion()._id]">Ver publicación</a>
+        }
     </div>
 
     <h3>{{ publicacion().titulo }}</h3>
@@ -18,16 +21,21 @@
         <img class="cover" [src]="publicacion().imagen" alt="Imagen de la publicación" />
     }
 
+
     <div class="post-foot">
         <button type="button" class="btn btn-sm btn-megusta" [class.liked]="leDioMeGusta()" (click)="alternarMeGusta()"> {{ leDioMeGusta() ? '♥' : '♡' }} Me gusta · {{ publicacion().likes.length }}
         </button>
 
         @if (puedeEliminar()) {
-            <button type="button" class="btn btn-sm btn-eliminar" (click)="borrarPubliacion()">Eliminar</button>
+            <button type="button" class="btn btn-sm btn-eliminar" (click)="borrarPubliacion()">❌</button>
         }
     </div>
 
     @if (error()) {
         <p class="msg-error">{{ error() }}</p>
     }
+
+    <div class="seccion-comentarios">
+        <app-comentarios [idPublicacion]="publicacion()._id" [resumen]="!enDetalle()" />
+    </div>
 </article>

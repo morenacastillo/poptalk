@@ -24,7 +24,7 @@ export const routes: Routes = [
         children:[
             {
                 path: '',
-                loadComponent: () => import('./componentes/usuario/publicaciones/publicaciones').then(m => m.Publicaciones)
+                loadComponent: () => import('./componentes/usuario/home/home').then(m => m.Home)
             },
             {
                 path: 'perfil',
@@ -34,6 +34,10 @@ export const routes: Routes = [
                 path: 'admin',
                 loadComponent: () => import('./componentes/admin/admin'). then(m => m.Admin),
                 canMatch: [roleAdminGuard]
+            },
+            {
+                path: 'publicacion/:id',
+                loadComponent: () => import('./componentes/usuario/publicacion-detalle/publicacion-detalle').then(m => m.PublicacionDetalle)
             },
         ]
     },

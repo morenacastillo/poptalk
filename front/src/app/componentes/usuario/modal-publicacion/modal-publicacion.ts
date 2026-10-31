@@ -1,6 +1,6 @@
 import { Component, output, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { HomePublicaciones } from '../../../servicios/homePublicaciones';
+import { PublicacionesService } from '../../../servicios/publicaciones.service';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -23,7 +23,7 @@ export class ModalPublicacion {
   imagen: File | null = null;
   imagenNombre = signal('')
 
-  constructor(private publicacionesService: HomePublicaciones) {}
+  constructor(private publicacionesService: PublicacionesService) {}
 
   publicar() {
     if (this.formPublicacion.invalid) {
