@@ -17,6 +17,11 @@
     <app-card-publicacion [publicacion]="publicacion"
                         (eliminada)="obtenerPublicacionesHome()"
                         (cambiada)="obtenerPublicacionesHome()" />
+} @empty {
+    <div class="vacio">
+        <p class="vacio-titulo">Todavía no hay publicaciones</p>
+        <p>Sé la primera persona en publicar.</p>
+    </div>
 }
 
 <div class="paginacion">

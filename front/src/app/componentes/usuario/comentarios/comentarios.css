@@ -3,17 +3,21 @@
 }
 
 .nuevo-comentario {
-    background: var(--white);
-    border: var(--bw) solid var(--ink);
-    border-radius: var(--r);
-    box-shadow: var(--sh);
-    padding: 12px 14px;
-    margin: 16px 0;
+    margin: 8px 0 12px;
+}
+
+.nuevo-comentario .fila {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
 }
 
 .nuevo-comentario textarea {
-    width: 100%;
-    min-height: 70px;
+    min-height: 44px;
+}
+
+.nuevo-comentario small {
+    color: var(--ink-soft);
 }
 
 .acciones {
@@ -27,11 +31,29 @@
     color: var(--ink-soft);
 }
 
+app-card-comentario {
+    margin-bottom: 8px;
+    --fondo-comentario: var(--pink-suave);
+}
+
+/* dentro de la card, sin comentarios el texto va a la izquierda */
 .vacio {
-    text-align: center;
-    color: var(--ink-soft);
-    padding: 16px;
-    border: var(--bw) dashed var(--ink);
-    border-radius: var(--r);
-    background: var(--white);
+    text-align: left;
+    padding: 6px 0;
+}
+
+.ver-todos {
+    display: inline-block;
+    margin-top: 4px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: underline;
+}
+
+.comentario {
+    background: var(--bg);
+    border: 1px solid var(--ink-soft);
+    border-radius: 12px;
+    padding: 10px 14px;
+    overflow-wrap: anywhere;
 }

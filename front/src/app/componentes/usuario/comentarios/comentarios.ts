@@ -4,9 +4,9 @@ import { ComentariosService } from '../../../servicios/comentarios.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CardComentario } from '../card-comentario/card-comentario';
 import { RouterLink } from '@angular/router';
-
+  
 @Component({
-  imports: [ReactiveFormsModule, CardComentario, RouterLink],
+  imports: [ReactiveFormsModule, CardComentario],
   selector: 'app-comentarios',
   styleUrl: './comentarios.css',
   templateUrl: './comentarios.html',

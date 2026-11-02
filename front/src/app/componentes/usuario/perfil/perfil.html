@@ -2,25 +2,33 @@
     <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
 
     <div class="perfil-cuerpo">
-        @if (usuario?.imagen) {
-            <img class="foto-perfil" [src]="usuario?.imagen" alt="Foto de perfil" />
-        }
-
-        <div class="perfil-info">
+        <div class="perfil-quien">
+            @if (usuario?.imagen) {
+                <img class="foto-perfil" [src]="usuario?.imagen" alt="Foto de perfil" />
+            }
             <h2>{{ usuario?.nombre }} {{ usuario?.apellido }}</h2>
-            <p class="user">&#64;{{ usuario?.nombreUsuario }}</p>
-            <p class="bio">{{ usuario?.descripcion }}</p>
+            <span class="user">&#64;{{ usuario?.nombreUsuario }}</span>
+        </div>
 
-            <div class="datos">
-                <div class="dato">
-                    <small>Correo</small>
-                    <b>{{ usuario?.correo }}</b>
-                </div>
-                <div class="dato">
-                    <small>Fecha de nacimiento</small>
-                    <b>{{ usuario?.fechaNacimiento | date:'dd/MM/yyyy':'UTC' }}</b>
-                </div>
-            </div>
+        <div class="sobre-mi">
+            <small>Sobre mí</small>
+            <p class="bio">{{ usuario?.descripcion }}</p>
+            <p class="dato">
+                <svg class="icono" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="M3 7l9 6 9-6" />
+                </svg>
+                <b>{{ usuario?.correo }}</b>
+            </p>
+            <p class="dato">
+                <svg class="icono" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 20h16v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" />
+                    <path d="M4 16c2 1.5 3 1.5 4 0s2-1.5 4 0 3 1.5 4 0 2-1.5 4 0" />
+                    <path d="M12 11V8" />
+                    <path d="M12 6c-.9-.8-.9-1.6 0-2.4.9.8.9 1.6 0 2.4z" />
+                </svg>
+                <b>{{ usuario?.fechaNacimiento | date:'dd/MM/yyyy':'UTC' }}</b>
+            </p>
         </div>
     </div>
 </section>
@@ -43,6 +51,6 @@
 } @empty {
     <div class="vacio">
         <p class="vacio-titulo">Todavía no publicaste nada</p>
-        <p class="vacio-texto">Contanos tu opinión para empezar.</p>
+        <p>Contanos tu opinión para empezar.</p>
     </div>
 }

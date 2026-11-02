@@ -81,18 +81,23 @@ p {
     width: 150px;
 }
 
-.btn-ver {
+.acciones-head {
     margin-left: auto;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .btn-eliminar {
-    margin-left: auto;
     background: var(--err);
     color: var(--ink);
 }
 
 .msg-error {
     margin-top: 12px;
+    color: var(--ink);
+    font-size: .88rem;
 }
 
 .btn-megusta.liked {
@@ -101,6 +106,9 @@ p {
 
 .seccion-comentarios {
     margin-top: 14px;
-    padding-top: 14px;
-    border-top: 2px dashed var(--ink);
+}
+
+.seccion-comentarios h4 {
+    font-family: var(--f-title);
+    margin-bottom: 8px;
 }

@@ -1,9 +1,3 @@
-/* =====================================================
-   Poptalk · estilos globales
-   Acá va todo lo que usan varias pantallas a la vez.
-   Lo que usa una sola pantalla va en el .css de su componente.
-   ===================================================== */
-
 /* ---------- paleta y variables ---------- */
 :root {
     --bg: #E6F4FC;
@@ -11,9 +5,11 @@
     --sky-d: #7CC4EC;
     --powder: #D5EDFA;
     --white: #FFFFFF;
+    --whitegray: #eeeded;
     --ink: #10213F;
     --ink-soft: #4A5B78;
     --pink: #FFC2D9;
+    --pink-suave: #FFF0F6;
     --butter: #FFE8A3;
     --ok: #B6F0CF;
     --err: #FFB4B4;
@@ -167,6 +163,21 @@ input.invalido {
 }
 .msg-error { background: var(--err); }
 .msg-ok { background: var(--ok); }
+
+/* ---------- estado vacío (listas sin elementos), compartido por inicio, perfil y comentarios ---------- */
+.vacio {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: .9rem;
+    padding: 18px 0;
+}
+
+.vacio-titulo {
+    font-family: var(--f-title);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--ink);
+}
 
 /* ---------- tarjeta de login y registro (tamaño compacto compartido) ---------- */
 .auth-page {

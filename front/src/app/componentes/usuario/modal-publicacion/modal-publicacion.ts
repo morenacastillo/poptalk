@@ -59,21 +59,29 @@ export class ModalPublicacion {
   }
 
   seleccionarImagen(event: Event) {
-      const input = event.target as HTMLInputElement;
-      const archivo = input.files?.[0] ?? null;
+    const input = event.target as HTMLInputElement;
+    const archivo = input.files?.[0] ?? null;
 
-      if (archivo && archivo.size > 500 * 1024) {
-        this.error.set('La imagen no puede pesar más de 500 KB.');
-        input.value = '';
-        this.imagen = null;
-        this.imagenNombre.set('');
-        return;
-      }
-
-      this.error.set('');
-      this.imagen = archivo;
-      this.imagenNombre.set(archivo ? archivo.name : '');
+    if (archivo && !archivo.type.startsWith('image/')) {
+      this.error.set('El archivo tiene que ser una imagen.');
+      input.value = '';
+      this.imagen = null;
+      this.imagenNombre.set('');
+      return;
     }
+
+    if (archivo && archivo.size > 500 * 1024) {
+      this.error.set('La imagen no puede pesar más de 500 KB.');
+      input.value = '';
+      this.imagen = null;
+      this.imagenNombre.set('');
+      return;
+    }
+
+    this.error.set('');
+    this.imagen = archivo;
+    this.imagenNombre.set(archivo ? archivo.name : '');
+  }
 
 
 

@@ -1,7 +1,6 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { DatosPublicacion } from '../../../modelos/publicacion';
 import { PublicacionesService } from '../../../servicios/publicaciones.service';
-import { DatePipe } from '@angular/common';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 import { ModalPublicacion } from '../modal-publicacion/modal-publicacion';
 import { AuthService } from '../../../servicios/auth.service';
@@ -12,7 +11,7 @@ import { AuthService } from '../../../servicios/auth.service';
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
-export class Home {
+export class Home implements OnInit{
   publicaciones = signal<DatosPublicacion[]>([])
   error = signal('');
   modalAbierto = signal(false);

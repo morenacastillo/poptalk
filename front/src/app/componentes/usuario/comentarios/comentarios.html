@@ -1,10 +1,10 @@
 @if (!resumen()) {
     <form class="nuevo-comentario" [formGroup]="formComentario" (ngSubmit)="crearComentario()">
-        <textarea formControlName="mensaje" placeholder="Escribí un comentario..."></textarea>
-        <div class="acciones">
-            <small>{{ formComentario.controls.mensaje.value?.length || 0 }}/300</small>
-            <button type="submit" class="btn btn-sm" [disabled]="formComentario.invalid">Comentar</button>
+        <div class="fila">
+            <textarea formControlName="mensaje" placeholder="Escribí un comentario..."></textarea>
+            <button type="submit" class="btn btn-sm btn-primary" [disabled]="formComentario.invalid">Comentar</button>
         </div>
+        <small>{{ formComentario.controls.mensaje.value?.length || 0 }}/300</small>
     </form>
 }
 
@@ -18,12 +18,9 @@
                         (eliminada)="recargar()" />
 } @empty {
     <p class="vacio">Todavía no hay comentarios.</p>
+    
 }
 
-@if (hayMas()) {
-    @if (resumen()) {
-        <a [routerLink]="['/home/publicacion', idPublicacion()]">Ver todos los comentarios</a>
-    } @else {
-        <button type="button" class="btn btn-sm" (click)="cargarMas()">Cargar más</button>
-    }
+@if (hayMas() && !resumen()) {
+    <button type="button" class="btn btn-sm" (click)="cargarMas()">Cargar más</button>
 }

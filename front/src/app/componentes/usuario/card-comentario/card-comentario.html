@@ -1,20 +1,36 @@
 <article class="comentario">
-    <b>{{ comentario().autor.nombreUsuario }}</b>
-    <small>{{ comentario().fechaCreacion | date:'dd/MM/yyyy HH:mm' }}</small>
-    @if (comentario().modificado) {
-        <small>(editado)</small>
-    }
+    <div class="avatar">
+        @if (comentario().autor?.imagen) {
+            <img [src]="comentario().autor.imagen" alt="Foto de perfil" />
+        }
+    </div>
 
-    @if (editando()) {
-        <form [formGroup]="formEditarComentario" (ngSubmit)="guardarEdicionComentario()">
-            <textarea formControlName="mensaje"></textarea>
-            <button type="button" class="btn btn-sm" (click)="cancelarEdicion()">Cancelar</button>
-            <button type="submit" class="btn btn-sm" [disabled]="formEditarComentario.invalid">Guardar</button>
-        </form>
-    } @else {
-        <p>{{ comentario().mensaje }}</p>
+    <div class="cuerpo">
+        <div class="who">
+            <b>{{ comentario().autor.nombreUsuario }}</b>
+            <small>{{ comentario().fechaCreacion | date:'dd/MM/yyyy HH:mm' }}</small>
+            @if (comentario().modificado) {
+                <small class="editado">(editado)</small>
+            }
+        </div>
 
-        <div class="post-foot">
+        @if (editando()) {
+            <form [formGroup]="formEditarComentario" (ngSubmit)="guardarEdicionComentario()">
+                <textarea formControlName="mensaje"></textarea>
+                <button type="button" class="btn btn-sm" (click)="cancelarEdicion()">Cancelar</button>
+                <button type="submit" class="btn btn-sm btn-primary" [disabled]="formEditarComentario.invalid">Guardar</button>
+            </form>
+        } @else {
+            <p>{{ comentario().mensaje }}</p>
+        }
+
+        @if (error()) {
+            <p class="msg-error">{{ error() }}</p>
+        }
+    </div>
+
+    @if (!editando()) {
+        <div class="acciones">
             @if (puedeEditar()) {
                 <button type="button" class="btn btn-sm" (click)="empezarEdicion()">Modificar</button>
             }
@@ -22,9 +38,5 @@
                 <button type="button" class="btn btn-sm btn-eliminar" (click)="borrarComentario()">Eliminar</button>
             }
         </div>
-    }
-
-    @if (error()) {
-        <p class="msg-error">{{ error() }}</p>
     }
 </article>
