@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UseGuards, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UseGuards, UploadedFile, UseInterceptors, Req } from '@nestjs/common';
 import { AutenticacionService } from './autenticacion.service.js';
 import { CreateAutenticacionDto } from './dto/create-autenticacion.dto.js';
 import { AuthDto } from './dto/auth.dto.js';
@@ -34,10 +34,10 @@ export class AutenticacionController {
   return result;
 }
 
-  @Get('perfil/:id')
-  @UseGuards(AuthGuard) //antes de entrar al id de un usuario, valida el token
-  validateToken(@Param('id') id: string) {
-    return this.authService.getPerfil(id)
+  @Get('perfil')
+  @UseGuards(AuthGuard)//antes de entrar al id de un usuario, valida el token
+  validateToken(@Req() req: Request & { user: { sub: string } }) {
+    return this.authService.getPerfil(req.user.sub)
   }
   
 }

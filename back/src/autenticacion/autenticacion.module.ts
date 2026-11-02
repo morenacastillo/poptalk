@@ -15,7 +15,7 @@ import { FileService } from '../file/file/file.service.js';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '20s'}
+      signOptions: { expiresIn: '45s'}
     }),
 
   ],

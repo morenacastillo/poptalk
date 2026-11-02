@@ -12,11 +12,11 @@ export class AuthGuard implements CanActivate { //los guards son clases siempre 
     context: ExecutionContext,): 
     boolean | Promise<boolean> | Observable<boolean> {
     
-    const token = this.extractTokenCookie(context); //extrae e tijeb dek oedudi
+    const token = this.extractTokenCookie(context); 
 
     if(!token) {
-      throw new UnauthorizedException();
-    }
+    throw new UnauthorizedException('Tu sesión venció. Volvé a iniciar sesión.');
+  }
 
     try {
       const payload = this.jwtService.verify(token); //verifica si es valido y no esta vencido
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate { //los guards son clases siempre 
       context.switchToHttp().getRequest().user = payload;
       return true
     } catch (e) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Tu sesión venció. Volvé a iniciar sesión.');
     }
   }
 

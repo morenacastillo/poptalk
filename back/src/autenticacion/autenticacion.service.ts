@@ -50,6 +50,13 @@ export class AutenticacionService {
     if (!imagen) {
       throw new BadRequestException('La imagen de perfil es obligatoria');
     }
+
+    if (!imagen.mimetype.startsWith('image/')) {
+      throw new BadRequestException('El archivo tiene que ser una imagen');
+    }
+    if (imagen.size > 500 * 1024) {
+      throw new BadRequestException('La imagen no puede pesar más de 500 KB');
+    }
     createAuthDto.imagen = await this.fileService.subirImagen(imagen);
 
     createAuthDto.contrasena = await this.passwordHasher.hash(createAuthDto.contrasena);
@@ -69,7 +76,7 @@ export class AutenticacionService {
     if (!user) {
       throw new BadRequestException('No se pudo obtener el perfil');
     }
-    return user
+    return this.armarUsuario(user)
   }
 
 
@@ -125,7 +132,7 @@ export class AutenticacionService {
   setTokenCookie(res: Response, token: string) {
     res.cookie('token', token, {
       ...this.opcionesCookie(),
-      maxAge: 1000 * 20, // 20 segundos, sincronización con el token
+      maxAge: 1000 * 45, // 20 segundos, sincronización con el token
     });
   }
 

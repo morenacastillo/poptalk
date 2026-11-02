@@ -17,6 +17,9 @@ export class PublicacionesService {
       if(!imagen.mimetype.startsWith('image/')) {
         throw new BadRequestException('El archivo tiene que ser una imagen');
       }
+      if (imagen.size > 500 * 1024) {
+        throw new BadRequestException('La imagen no puede pesar más de 500 KB');
+      }
       urlImagen = await this.fileService.subirImagen(imagen)
     }
     try {
@@ -67,7 +70,6 @@ export class PublicacionesService {
       return { publicaciones, total };
   }
       
-
   findByUser(autor: string) {
     return this.publicacionModel
       .find({ autor: autor, habilitado: true })
@@ -123,11 +125,6 @@ export class PublicacionesService {
     }
 
     return publicacion;
-  }
-
-  
-  update(id: string, updatePublicacioneDto: UpdatePublicacionDto) {
-    return `This action updates a #${id} publicacione`;
   }
 
 
