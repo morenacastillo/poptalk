@@ -39,7 +39,7 @@ export class PublicacionesService {
     }
   }
 
-  async findAll(orden: string = "fecha", offset: number = 0, limit: number) { // devuelve 5 x pagina (offset 0 / 1 /2)
+  async findAll(orden: string = "fecha", offset: number = 0, limit: number) { // devuelve 5 x pagina (offset 0 / 1 / 2)
     const filtro = {habilitado: true}
     let publicaciones;
 
@@ -60,9 +60,9 @@ export class PublicacionesService {
       publicaciones = await this.publicacionModel
       .find(filtro)
       .sort({ fechaPublicacion: -1})
-      .skip(offset * limit) // offset 0 = 0 x 5 = 5 -> trae las primeras 5 (no saltea ninguna)
-                            // offset 1 = 1 x 5 = 10 -> trae de 6 a 10 (se saltea de la 1 a 5)
-                            // offset 2 = 2 x 5 = 15 -> trae de 11 a 15 (se saltea de la 1 a 10)
+      .skip(offset * limit) // offset 0 = 0 x 5 = 0 -> trae las primeras 5 (no saltea ninguna)
+                            // offset 1 = 1 x 5 = 5 -> trae de 6 a 10 (se saltea de la 1 a 5)
+                            // offset 2 = 2 x 5 = 10 -> trae de 11 a 15 (se saltea de la 1 a 10)
       .limit(limit)
       .populate('autor', 'nombreUsuario imagen')
     }

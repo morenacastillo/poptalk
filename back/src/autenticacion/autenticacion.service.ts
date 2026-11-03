@@ -83,7 +83,7 @@ export class AutenticacionService {
   //payload son los datos que viajan adentro del token. signAsync los firma con la clave secreta y devuelve el token ya armado.
   generateToken(usuario: UsuarioDocument) {
     const payload = {correo: usuario.correo, sub: usuario._id, perfil: usuario.perfil}
-    return this.jwtService.signAsync(payload)
+    return this.jwtService.signAsync(payload) //payload + firma clave secreta
   }
 
 
@@ -132,7 +132,7 @@ export class AutenticacionService {
   setTokenCookie(res: Response, token: string) {
     res.cookie('token', token, {
       ...this.opcionesCookie(),
-      maxAge: 1000 * 45, // 20 segundos, sincronización con el token
+      maxAge: 1000 * 45, // 45 segundos, sincronización con el token
     });
   }
 

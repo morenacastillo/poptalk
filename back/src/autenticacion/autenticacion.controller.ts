@@ -16,7 +16,7 @@ export class AutenticacionController {
               @Res({passthrough: true}) res: Response) {
     const result = await this.authService.login(loginAuthDto);
     this.authService.setTokenCookie(res, result.token);
-    return { usuario: result.usuario }; //se entrega el token al navegador
+    return { usuario: result.usuario }; //al front solo le devuelvo el usuario, el token lo guarda el navegador
   }
 
   @Post('logout')
