@@ -19,7 +19,7 @@ export class AuthService {
         return this.http.post<RespuestaAuth>(this.url + '/registro', datos, { withCredentials: true })
     }
 
-    // el token vive en la cookie (httpOnly): acá solo se guardan los datos del usuario
+    // el token vive en la cookie q lo manda el back; acá solo se guardan los datos del usuario
     guardarSesion(usuario: Usuario) {
         localStorage.setItem('usuario', JSON.stringify(usuario));
         this.usuario.set(usuario);
