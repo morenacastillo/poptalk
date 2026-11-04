@@ -1,0 +1,47 @@
+.cargando {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* el aro: un degradé de colores en círculo al que se le "agujerea" el centro */
+.aro {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+        transparent 0%,
+        var(--sky) 25%,
+        var(--sky-d) 45%,
+        var(--pink) 72%,
+        var(--butter) 100%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 11px), #000 calc(100% - 10px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 11px), #000 calc(100% - 10px));
+    animation: girar 1s linear infinite;
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+
+.cargando h2 {
+    font-family: var(--f-title);
+    font-size: 1.4rem;
+    margin-top: 10px;
+}
+
+.cargando p {
+    margin-top: 6px;
+    color: var(--ink-soft);
+}
+
+/* si el usuario pidió menos movimiento, el aro queda quieto */
+@media (prefers-reduced-motion: reduce) {
+    .aro {
+        animation: none;
+    }
+}

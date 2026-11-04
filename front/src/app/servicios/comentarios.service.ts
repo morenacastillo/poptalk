@@ -13,27 +13,24 @@ export class ComentariosService {
     
     obtenerComentariosPorPublicacion(idPubliacion: string, offset: number, limit: number) {
         return this.http.get<RespuestaComentarios>(
-            this.url + '/publicacion/' + idPubliacion + '?offset=' + offset + '&limit=' + limit, 
-            { withCredentials: true });
+            this.url + '/publicacion/' + idPubliacion + '?offset=' + offset + '&limit=' + limit);
     }
 
     crearComentario(idPublicacion: string, mensaje: string) {
         return this.http.post<DatosComentario>(
             this.url + '/' + idPublicacion,
-            { mensaje: mensaje },
-            { withCredentials: true }
+            { mensaje: mensaje }
         );
     }
     
     bajaComentario(idComentario: string) {
-        return this.http.delete<DatosComentario>(this.url + '/' + idComentario, { withCredentials: true });
+        return this.http.delete<DatosComentario>(this.url + '/' + idComentario);
     }
 
     modificarComentario(idComentario: string, mensaje: string) {
         return this.http.put<DatosComentario>(
             this.url + '/' + idComentario,
-            { mensaje: mensaje },
-            { withCredentials: true }
+            { mensaje: mensaje }
         );
     }
 }

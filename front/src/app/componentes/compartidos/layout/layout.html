@@ -3,3 +3,7 @@
     <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>
+
+@if (mostrarAviso()) {
+    <app-sesion [segundos]="segundos()" (refrescar)="refrescar()" (cerrar)="cerrarAviso()" />
+}

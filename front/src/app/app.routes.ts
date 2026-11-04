@@ -6,7 +6,7 @@ export const routes: Routes = [
 
     {
         path: "",
-        redirectTo: "home",
+        redirectTo: "cargando",
         pathMatch: 'full'
     },
     {
@@ -16,6 +16,10 @@ export const routes: Routes = [
     {
         path: "login",
         loadComponent: () => import('./componentes/auth/login/login'). then(m => m.Login)
+    },
+    {
+        path: "cargando",
+        loadComponent: () => import('./componentes/compartidos/cargando/cargando').then(m => m.Cargando)
     },
     {
         path: "home",

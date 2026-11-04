@@ -2,6 +2,11 @@ import { Usuario } from './usuario';
 
 export interface RespuestaAuth {
     usuario: Usuario;
+    exp?: number;
+}
+
+export interface RespuestaRefresh {
+    token: string;
 }
 
 export interface DatosLogin {

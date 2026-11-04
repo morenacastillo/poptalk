@@ -11,32 +11,31 @@ export class PublicacionesService {
     private url = environment.apiUrl + '/publicaciones';
 
     obtenerPublicacion(idPublicacion: string) {
-        return this.http.get<DatosPublicacion>(this.url + '/' + idPublicacion, { withCredentials: true });
+        return this.http.get<DatosPublicacion>(this.url + '/' + idPublicacion);
     }
     
     obtenerPublicaciones(offset: number = 0, limit: number = 10, orden: string = 'fecha') {
         return this.http.get<RespuestaPublicaciones>(
-            this.url + '?offset=' + offset + '&limit=' + limit + '&orden=' + orden,
-            { withCredentials: true });
+            this.url + '?offset=' + offset + '&limit=' + limit + '&orden=' + orden);
     }
 
     obtenerPublicacionesPorUsuario(idAutor: string) {
-        return this.http.get<DatosPublicacion[]>(this.url + '/autor/' + idAutor, { withCredentials: true });
+        return this.http.get<DatosPublicacion[]>(this.url + '/autor/' + idAutor);
     }
 
     crearPubliacion(datos: FormData) {
-        return this.http.post<DatosPublicacion>(this.url, datos, { withCredentials: true });
+        return this.http.post<DatosPublicacion>(this.url, datos);
     }
 
     bajaPublicacion(idPublicacion: string) {
-        return this.http.delete<DatosPublicacion>(this.url + '/' + idPublicacion, { withCredentials: true });
+        return this.http.delete<DatosPublicacion>(this.url + '/' + idPublicacion);
     }
 
     darMeGusta(idPublicacion: string) {
-        return this.http.post<DatosPublicacion>(this.url + '/' + idPublicacion + '/megusta', {}, {withCredentials: true})
+        return this.http.post<DatosPublicacion>(this.url + '/' + idPublicacion + '/megusta', {})
     }
 
     quitarMeGusta(idPublicacion: string) {
-        return this.http.delete<DatosPublicacion>(this.url + '/' + idPublicacion + '/megusta',{withCredentials: true})
+        return this.http.delete<DatosPublicacion>(this.url + '/' + idPublicacion + '/megusta')
     }
 }

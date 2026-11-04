@@ -1,0 +1,14 @@
+<div class="overlay">
+    <div class="modal">
+        <h2>¡Hola, {{ usuario?.nombre }} {{ usuario?.apellido }}!</h2>
+        <p class="aviso">
+            Tu sesión está por vencer. Se cierra en
+            <b>{{ segundos() }} @if (segundos() === 1) { segundo } @else { segundos }</b>.
+        </p>
+        <p>¿Querés mantener la sesión abierta?</p>
+        <div class="acciones">
+            <button type="button" class="btn" (click)="cerrar.emit()">No, cerrar sesión</button>
+            <button type="button" class="btn btn-primary" (click)="refrescar.emit()">Sí, seguir</button>
+        </div>
+    </div>
+</div>
