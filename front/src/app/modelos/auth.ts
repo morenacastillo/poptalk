@@ -7,6 +7,7 @@ export interface RespuestaAuth {
 
 export interface RespuestaRefresh {
     token: string;
+    exp: number;
 }
 
 export interface DatosLogin {

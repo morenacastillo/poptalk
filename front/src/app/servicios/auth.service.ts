@@ -19,10 +19,10 @@ export class AuthService {
     }
 
     // el token vive en la cookie q lo manda el back; acá solo se guardan los datos del usuario
-    guardarSesion(usuario: Usuario) {
+    guardarSesion(usuario: Usuario, exp: number) {
         localStorage.setItem('usuario', JSON.stringify(usuario));
         this.usuario.set(usuario);
-        this.guardarVencimiento();
+        this.guardarVencimiento(exp);
     }
 
     // la cookie httpOnly no se puede borrar desde el front: se le pide al back que la borre
@@ -48,10 +48,10 @@ export class AuthService {
         return this.http.post<RespuestaRefresh>(this.url + '/refresh', {})
     }
 
-    guardarVencimiento(hasta: number = Date.now() + 45 * 1000) {
-        localStorage.setItem('vencimiento', String(hasta))
+    guardarVencimiento(exp: number) {
+        localStorage.setItem('vencimiento', String(exp * 1000))   // exp viene en segundos desde el back
     }
-
+    
     leerVencimiento() {
         return Number(localStorage.getItem('vencimiento'))
     }

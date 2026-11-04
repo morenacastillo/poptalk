@@ -13,8 +13,7 @@ export class Cargando implements OnInit {
     ngOnInit() {
     this.authService.autorizar().subscribe({
       next: (respuesta) => {
-        this.authService.guardarSesion(respuesta.usuario);
-        this.authService.guardarVencimiento(respuesta.exp! * 1000);
+        this.authService.guardarSesion(respuesta.usuario, respuesta.exp!);
         setTimeout(() => this.router.navigate(['/home']), 3000);
       },
       error: () => {

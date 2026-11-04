@@ -22,7 +22,7 @@ export class AutenticacionService {
 
 
   async refrescarToken(usuario: {correo: string; sub: string; perfil: string}) {
-    return this.jwtService.signAsync({correo: usuario.correo, sub: usuario.sub, perfil: usuario.perfil})
+    return this.jwtService.signAsync({correo: usuario.correo, sub: usuario.sub, perfil: usuario.perfil}) // arma nuevo token con mismos datos
   }
 
 
@@ -136,6 +136,10 @@ export class AutenticacionService {
   }
 
 
+  obtenerExp(token: string) {
+      const payload = this.jwtService.decode(token) as { exp: number }
+      return payload.exp
+  }
 
 
 }

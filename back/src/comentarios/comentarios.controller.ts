@@ -19,6 +19,7 @@ export class ComentariosController {
   }
 
   @Get('publicacion/:idPubliacion')
+  @UseGuards(AuthGuard)
   findByPublicacion(
     @Param('idPubliacion') idPublicacion: string,
     @Query('offset') offset?: string,

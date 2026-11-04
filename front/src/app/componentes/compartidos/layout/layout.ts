@@ -43,8 +43,8 @@ export class Layout implements OnInit, OnDestroy{
 
   refrescar() {
     this.authService.refreshToken().subscribe({
-      next: () => {
-        this.authService.guardarVencimiento();
+      next: (respuesta) => {
+        this.authService.guardarVencimiento(respuesta.exp);
         this.avisoRespondido = false;
         this.mostrarAviso.set(false);
       },

@@ -31,7 +31,7 @@ export class Login {
     this.auth.login(this.formLogin.getRawValue()).subscribe({ //observable al que hay que suscribirse, devuelve los valores del form como objeto
       next: (respuesta) => { // back respondio ok
         this.cargando.set(false);
-        this.auth.guardarSesion(respuesta.usuario);
+        this.auth.guardarSesion(respuesta.usuario, respuesta.exp!);
         this.router.navigate(['/home']);
       },
       error: (err) => { // back rechazo

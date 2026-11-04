@@ -16,7 +16,7 @@ export class AutenticacionController {
   async refrescar(@Req() request: any, @Res({ passthrough: true }) res: Response) {
     const token = await this.authService.refrescarToken(request.user);
     this.authService.setTokenCookie(res, token);
-    return { token };
+    return { token, exp: this.authService.obtenerExp(token) };
   }
 
   @Post('login')
@@ -24,7 +24,7 @@ export class AutenticacionController {
               @Res({passthrough: true}) res: Response) {
     const result = await this.authService.login(loginAuthDto);
     this.authService.setTokenCookie(res, result.token);
-    return { usuario: result.usuario }; //al front solo le devuelvo el usuario, el token lo guarda el navegador
+    return { usuario: result.usuario, exp: this.authService.obtenerExp(result.token) }; //al front solo le devuelvo el usuario y el vencimiento, el token lo guarda el navegador
   }
 
   @Post('logout')
@@ -47,6 +47,7 @@ export class AutenticacionController {
   async autorizar(@Req() req: Request & { user: { sub: string; exp: number } }) {
     const usuario = await this.authService.getPerfil(req.user.sub)
     return { usuario, exp: req.user.exp }
-  }
+  }//si es valido, trae los datos del usuario sin la contraseña
+  // exp es la hs de vencimiento que guarda el payload del usuario, establecida en auth module
 
 }
