@@ -30,6 +30,7 @@ export class PublicacionesController {
 
 
   @Get()
+  @UseGuards(AuthGuard)
   findAll(@Query('orden') orden?: string,
           @Query('offset') offset?: string,
           @Query('limit') limit?: string) {
@@ -37,11 +38,13 @@ export class PublicacionesController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   findOne(@Param('id') id: string) {
     return this.publicacionesService.findOne(id);
   }
 
   @Get('autor/:id')
+  @UseGuards(AuthGuard)
   findByUser(@Param('id') id: string) {
     return this.publicacionesService.findByUser(id);
   }

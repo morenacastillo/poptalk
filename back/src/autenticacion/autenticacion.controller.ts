@@ -11,6 +11,14 @@ import { memoryStorage } from 'multer';
 export class AutenticacionController {
   constructor(private readonly authService: AutenticacionService) {}
 
+  @Post('refresh')
+  @UseGuards(AuthGuard)
+  async refrescar(@Req() request: any, @Res({ passthrough: true }) res: Response) {
+    const token = await this.authService.refrescarToken(request.user);
+    this.authService.setTokenCookie(res, token);
+    return { token };
+  }
+
   @Post('login')
   async login(@Body() loginAuthDto: AuthDto,
               @Res({passthrough: true}) res: Response) {
@@ -34,10 +42,11 @@ export class AutenticacionController {
   return result;
 }
 
-  @Get('perfil')
-  @UseGuards(AuthGuard)//antes de entrar al id de un usuario, valida el token
-  validateToken(@Req() req: Request & { user: { sub: string } }) {
-    return this.authService.getPerfil(req.user.sub)
+  @Post('autorizar') //antes de entrar al id de un usuario, valida el token
+  @UseGuards(AuthGuard)
+  async autorizar(@Req() req: Request & { user: { sub: string; exp: number } }) {
+    const usuario = await this.authService.getPerfil(req.user.sub)
+    return { usuario, exp: req.user.exp }
   }
-  
+
 }

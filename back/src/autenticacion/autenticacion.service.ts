@@ -21,6 +21,10 @@ export class AutenticacionService {
     ){}
 
 
+  async refrescarToken(usuario: {correo: string; sub: string; perfil: string}) {
+    return this.jwtService.signAsync({correo: usuario.correo, sub: usuario.sub, perfil: usuario.perfil})
+  }
+
 
   async login(loginAuthDto: AuthDto) {
     const user = await this.usuarioModel.findOne({ correo: loginAuthDto.correo})
@@ -33,7 +37,6 @@ export class AutenticacionService {
 
     return this.armarRespuesta(user);
   }
-
 
 
   async registro(createAuthDto: CreateAutenticacionDto, imagen: Express.Multer.File) {
@@ -70,7 +73,6 @@ export class AutenticacionService {
   }
   
 
-
   async getPerfil(id: string ) {
     const user = await this.usuarioModel.findById(id)
     if (!user) {
@@ -78,22 +80,11 @@ export class AutenticacionService {
     }
     return this.armarUsuario(user)
   }
-
-
-  //payload son los datos que viajan adentro del token. signAsync los firma con la clave secreta y devuelve el token ya armado.
-  generateToken(usuario: UsuarioDocument) {
-    const payload = {correo: usuario.correo, sub: usuario._id, perfil: usuario.perfil}
-    return this.jwtService.signAsync(payload) //payload + firma clave secreta
-  }
-
-
-
+  
   async armarRespuesta(user: UsuarioDocument) {
     const token = await this.generateToken(user);
     return { token, usuario: this.armarUsuario(user) };
   }
-
-
 
   armarUsuario(user: UsuarioDocument) {
   return {
@@ -108,8 +99,14 @@ export class AutenticacionService {
     perfil: user.perfil,
     habilitado: user.habilitado,
   };
-}
+  }
 
+
+  //payload son los datos que viajan adentro del token. signAsync los firma con la clave secreta y devuelve el token ya armado.
+  generateToken(usuario: UsuarioDocument) {
+    const payload = {correo: usuario.correo, sub: usuario._id, perfil: usuario.perfil}
+    return this.jwtService.signAsync(payload) //payload + firma clave secreta
+  }
 
   // en producción (Vercel, HTTPS) el front y el back están en dominios distintos:
   // la cookie necesita secure + sameSite 'none'. En local alcanza con 'lax'.
@@ -127,8 +124,6 @@ export class AutenticacionService {
     };
   }
 
-
-
   setTokenCookie(res: Response, token: string) {
     res.cookie('token', token, {
       ...this.opcionesCookie(),
@@ -139,5 +134,8 @@ export class AutenticacionService {
   clearTokenCookie(res: Response) {
     res.clearCookie('token', this.opcionesCookie());
   }
+
+
+
 
 }
