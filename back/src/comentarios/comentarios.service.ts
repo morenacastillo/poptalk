@@ -37,6 +37,10 @@ export class ComentariosService {
   }
 
   async findByPublicacion(idPublicacion: string, offset = 0, limit = 5) {
+    const publicacionEncontrada = await this.publicacionModel.findById(idPublicacion);
+    if (!publicacionEncontrada || publicacionEncontrada.habilitado === false) {
+      throw new NotFoundException('La publicacion no existe');
+    }
     const comentarios = await this.comentarioModel
     .find({publicacion: idPublicacion, habilitado: true})
     .sort({ fechaCreacion: -1 })

@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UploadedFile, UseInterceptors, Query  } from '@nestjs/common';
 import { PublicacionesService } from './publicaciones.service.js';
 import { CreatePublicacionDto } from './dto/create-publicacion.dto.js';
-import { UpdatePublicacionDto } from './dto/update-publicacion.dto.js';
 import { AuthGuard } from '../guards/auth/auth.guard.js';
 import type { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';

@@ -20,11 +20,14 @@ export class AutenticacionService {
     private readonly fileService: FileService
     ){}
 
-
   async refrescarToken(usuario: {correo: string; sub: string; perfil: string}) {
+    const user = await this.usuarioModel.findById(usuario.sub)
+    if (!user || !user.habilitado) {
+      throw new UnauthorizedException('Tu cuenta está deshabilitada. Contactá a un administrador.');
+    }
     return this.jwtService.signAsync({correo: usuario.correo, sub: usuario.sub, perfil: usuario.perfil}) // arma nuevo token con mismos datos
   }
-
+  
 
   async login(loginAuthDto: AuthDto) {
     const user = await this.usuarioModel.findOne({ correo: loginAuthDto.correo})
@@ -34,12 +37,16 @@ export class AutenticacionService {
     if (!(await this.passwordHasher.verify(loginAuthDto.contrasena, user.contrasena))) { //compara contraseña ingresada con el hash guardado
       throw new UnauthorizedException('Las credenciales no son correctas');
     }
+    
+    if (!user.habilitado) {
+      throw new UnauthorizedException('Tu cuenta está deshabilitada. Contactá a un administrador.');
+    }
 
     return this.armarRespuesta(user);
   }
 
 
-  async registro(createAuthDto: CreateAutenticacionDto, imagen: Express.Multer.File) {
+  async registro(createAuthDto: CreateAutenticacionDto, imagen: Express.Multer.File, perfil: string = 'usuario') {
     const correoUsado = await this.usuarioModel.findOne({ correo: createAuthDto.correo });
     if (correoUsado) {
       throw new BadRequestException('El correo ya está registrado');
@@ -63,7 +70,7 @@ export class AutenticacionService {
     createAuthDto.imagen = await this.fileService.subirImagen(imagen);
 
     createAuthDto.contrasena = await this.passwordHasher.hash(createAuthDto.contrasena);
-    const newUser = await this.usuarioModel.create(createAuthDto);
+    const newUser = await this.usuarioModel.create({ ...createAuthDto, perfil: perfil });
 
     if(!newUser) {
       throw new Error('Error al crear el usuario')
@@ -77,6 +84,9 @@ export class AutenticacionService {
     const user = await this.usuarioModel.findById(id)
     if (!user) {
       throw new BadRequestException('No se pudo obtener el perfil');
+    }
+    if (!user.habilitado) {
+      throw new UnauthorizedException('Tu cuenta está deshabilitada. Contactá a un administrador.');
     }
     return this.armarUsuario(user)
   }

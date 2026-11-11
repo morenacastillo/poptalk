@@ -21,5 +21,6 @@ import { FileService } from '../file/file/file.service.js';
   ],
   controllers: [AutenticacionController],
   providers: [AutenticacionService, FileService],
+  exports: [AutenticacionService]
 })
 export class AutenticacionModule {}
