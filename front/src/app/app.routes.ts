@@ -36,7 +36,7 @@ export const routes: Routes = [
             },
             {
                 path: 'admin',
-                loadComponent: () => import('./componentes/admin/admin'). then(m => m.Admin),
+                loadComponent: () => import('./componentes/admin/homeAdmin/admin'). then(m => m.Admin),
                 canMatch: [roleAdminGuard]
             },
             {

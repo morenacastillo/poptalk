@@ -1,0 +1,150 @@
+/* barra de resumen: tres contadores y el botón de alta */
+.resumen {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.dato {
+    background: var(--white);
+    border: var(--bw) solid var(--ink);
+    border-radius: var(--r);
+    box-shadow: 3px 3px 0 var(--ink);
+    padding: 6px 16px;
+}
+
+.dato small {
+    display: block;
+    font-size: .8rem;
+}
+
+.dato b {
+    font-family: var(--f-title);
+    font-size: 1.4rem;
+}
+
+.dato.ok { background: var(--ok); }
+.dato.no { background: var(--err); }
+
+.btn-nuevo {
+    margin-left: auto;
+    background: var(--ink);
+    color: var(--white);
+    box-shadow: 3px 3px 0 var(--sky-d);
+}
+
+.btn-nuevo:hover {
+    box-shadow: 2px 2px 0 var(--sky-d);
+}
+
+/* tabla */
+.tabla-caja {
+    background: var(--white);
+    border: var(--bw) solid var(--ink);
+    border-radius: var(--r);
+    box-shadow: var(--sh);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--sky-d);
+    font-size: .9rem;
+}
+
+th {
+    background: var(--powder);
+    font-size: .85rem;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* fila de un usuario deshabilitado */
+.apagada {
+    background: var(--bg);
+}
+
+.quien {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quien b {
+    display: block;
+}
+
+.quien small {
+    color: var(--ink-soft);
+    overflow-wrap: anywhere;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    object-fit: cover;
+    background: var(--pink);
+    flex: none;
+}
+
+.rol {
+    display: inline-block;
+    padding: 0 8px;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 700;
+    background: var(--white);
+}
+
+.rol.admin {
+    background: var(--butter);
+}
+
+/* etiqueta de estado y botón de acción: ancho fijo para que nada se mueva */
+.chip {
+    display: inline-block;
+    width: 122px;
+    text-align: center;
+    padding: 1px 10px;
+    border: 2px solid var(--ink);
+    border-radius: 99px;
+    font-size: .8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.chip.ok { background: var(--ok); }
+.chip.no { background: var(--err); }
+
+.accion {
+    text-align: right;
+}
+
+.accion .btn {
+    width: 124px;
+    white-space: nowrap;
+}
+
+.btn-habilitar { background: var(--ok); }
+.btn-eliminar { background: var(--err); }
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    margin: 20px 0;
+}

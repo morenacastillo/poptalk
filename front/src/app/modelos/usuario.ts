@@ -1,3 +1,9 @@
+export interface RespuestaUsuarios {
+    usuarios: Usuario[];
+    total: number;
+    habilitados: number;
+}
+
 export interface Usuario {
     _id: string;
     nombreUsuario: string;

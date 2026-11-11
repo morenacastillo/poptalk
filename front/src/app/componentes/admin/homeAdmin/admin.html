@@ -1,0 +1,78 @@
+<div class="resumen">
+    <div class="dato">
+        <small>Usuarios</small>
+        <b>{{ total() }}</b>
+    </div>
+    <div class="dato ok">
+        <small>Habilitados</small>
+        <b>{{ habilitados() }}</b>
+    </div>
+    <div class="dato no">
+        <small>Deshabilitados</small>
+        <b>{{ total() - habilitados() }}</b>
+    </div>
+    <button type="button" class="btn btn-nuevo" (click)="modalAbierto.set(true)">+ Nuevo usuario</button>
+</div>
+
+@if (error()) {
+    <p class="msg-error">{{ error() }}</p>
+}
+
+<div class="tabla-caja">
+    <table>
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Perfil</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (usuario of usuarios(); track usuario._id) {
+                <tr [class.apagada]="!usuario.habilitado">
+                    <td>
+                        <div class="quien">
+                            <img class="avatar" [src]="usuario.imagen" alt="Foto de perfil" />
+                            <div>
+                                <b>&#64;{{ usuario.nombreUsuario }}</b>
+                                <small>{{ usuario.nombre }} {{ usuario.apellido }} · {{ usuario.correo }}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="rol" [class.admin]="usuario.perfil === 'administrador'">{{ usuario.perfil }}</span>
+                    </td>
+                    <td>
+                        @if (usuario.habilitado) {
+                            <span class="chip ok">Habilitado</span>
+                        } @else {
+                            <span class="chip no">Deshabilitado</span>
+                        }
+                    </td>
+                    <td class="accion">
+                        @if (usuario.habilitado) {
+                            <button type="button" class="btn btn-sm btn-eliminar" [disabled]="esMiCuenta(usuario._id)" (click)="deshabilitar(usuario._id)">Deshabilitar</button>
+                        } @else {
+                            <button type="button" class="btn btn-sm btn-habilitar" (click)="habilitar(usuario._id)">Habilitar</button>
+                        }
+                    </td>
+                </tr>
+            } @empty {
+                <tr>
+                    <td colspan="4" class="vacio">No hay usuarios para mostrar.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="paginacion">
+    <button type="button" class="btn btn-sm" (click)="anterior()" [disabled]="pagina() === 0">Anterior</button>
+    <span>Página {{ pagina() + 1 }}</span>
+    <button type="button" class="btn btn-sm" (click)="siguiente()" [disabled]="!hayMas()">Siguiente</button>
+</div>
+
+@if (modalAbierto()) {
+    <app-modal-crear-usuario (cerrar)="modalAbierto.set(false)" (creada)="usuarioCreado()" />
+}

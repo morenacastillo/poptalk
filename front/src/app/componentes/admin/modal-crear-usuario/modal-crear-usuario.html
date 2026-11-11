@@ -1,0 +1,99 @@
+<div class="overlay">
+    <form class="modal" [formGroup]="formUsuario" (ngSubmit)="crearUsuario()">
+        <h2>Nuevo usuario</h2>
+
+        @if (error()) {
+            <p class="msg-error">{{ error() }}</p>
+        }
+
+        <div class="fila">
+            <div class="campo">
+                <label for="nombre">Nombre <span class="req">*</span></label>
+                <input id="nombre" type="text" formControlName="nombre" placeholder="Nombre"/>
+            </div>
+            <div class="campo">
+                <label for="apellido">Apellido <span class="req">*</span></label>
+                <input id="apellido" type="text" formControlName="apellido" placeholder="Apellido"/>
+            </div>
+        </div>
+
+        <div class="fila">
+            <div class="campo">
+                <label for="fechaNacimiento">Fecha de nacimiento <span class="req">*</span></label>
+                <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento"/>
+            </div>
+            <div class="campo">
+                <label for="imagen">Foto de perfil <span class="req">*</span></label>
+                <input id="imagen" type="file" accept="image/*" (change)="seleccionarImagen($event)"/>
+                @if (imagenNombre()) {
+                    <small>Seleccionada: {{ imagenNombre() }}</small>
+                }
+            </div>
+        </div>
+
+        <div class="campo">
+            <label for="descripcion">Descripción <span class="req">*</span></label>
+            <textarea id="descripcion" formControlName="descripcion" rows="2" placeholder="Algo sobre el usuario"></textarea>
+            @if (formUsuario.get('descripcion')?.errors?.['minlength'] && formUsuario.get('descripcion')?.touched) {
+                <p class="error">La descripción debe tener al menos 10 caracteres.</p>
+            }
+        </div>
+
+        <div class="fila">
+            <div class="campo">
+                <label for="correo">Correo <span class="req">*</span></label>
+                <input id="correo" type="email" formControlName="correo" placeholder="Correo electrónico"/>
+                @if (formUsuario.get('correo')?.errors?.['email'] && formUsuario.get('correo')?.touched) {
+                    <p class="error">El correo no tiene un formato válido.</p>
+                }
+            </div>
+            <div class="campo">
+                <label for="nombreUsuario">Nombre de usuario <span class="req">*</span></label>
+                <input id="nombreUsuario" type="text" formControlName="nombreUsuario" placeholder="Nombre de usuario"/>
+            </div>
+        </div>
+
+        <div class="fila">
+            <div class="campo campo-reserva">
+                <label for="contrasena">Contraseña <span class="req">*</span></label>
+                <input id="contrasena" type="password" formControlName="contrasena" placeholder="Contraseña"/>
+                @if (formUsuario.get('contrasena')?.errors?.['pattern'] && formUsuario.get('contrasena')?.touched) {
+                    <p class="error abajo">Mínimo 8 caracteres, una mayúscula y un número.</p>
+                }
+            </div>
+            <div class="campo campo-reserva">
+                <label for="confirmarContrasena">Repetir contraseña <span class="req">*</span></label>
+                <input id="confirmarContrasena" type="password" formControlName="confirmarContrasena" placeholder="Repetí la contraseña"
+                [class.invalido]="formUsuario.hasError('passwordNoCoincide') && formUsuario.get('confirmarContrasena')?.touched"/>
+                @if (formUsuario.hasError('passwordNoCoincide') && formUsuario.get('confirmarContrasena')?.value && formUsuario.get('confirmarContrasena')?.touched) {
+                    <p class="error abajo">Las contraseñas no coinciden.</p>
+                }
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Perfil <span class="req">*</span></label>
+            <div class="radios">
+                <label class="radio" [class.elegido]="formUsuario.get('perfil')?.value === 'usuario'">
+                    <input type="radio" formControlName="perfil" value="usuario"/>
+                    <span class="radio-texto">
+                        <b>Usuario</b>
+                        <small>Publica, comenta y da me gusta</small>
+                    </span>
+                </label>
+                <label class="radio" [class.elegido]="formUsuario.get('perfil')?.value === 'administrador'">
+                    <input type="radio" formControlName="perfil" value="administrador"/>
+                    <span class="radio-texto">
+                        <b>Administrador</b>
+                        <small>Además gestiona usuarios y estadísticas</small>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="acciones">
+            <button type="button" class="btn" (click)="cerrar.emit()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="formUsuario.invalid || cargando()">Crear usuario</button>
+        </div>
+    </form>
+</div>

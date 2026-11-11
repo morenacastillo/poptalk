@@ -1,0 +1,96 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 33, 63, 0.55);
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.modal {
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    box-shadow: 4px 4px 0 var(--ink);
+    padding: 20px;
+    width: 100%;
+    max-width: 620px;
+}
+
+.modal h2 {
+    font-family: var(--f-title);
+    margin-bottom: 12px;
+}
+
+.fila {
+    display: flex;
+    gap: 12px;
+}
+
+.fila .campo {
+    flex: 1;
+}
+
+.radios {
+    display: flex;
+    gap: 12px;
+}
+
+/* cada opción es una tarjeta clickeable: el label envuelve al radio */
+.radio {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.radio:hover {
+    background: var(--powder);
+}
+
+/* la opción elegida: mismo recurso que los botones (color + sombra dura) */
+.radio.elegido {
+    background: var(--butter);
+    box-shadow: 3px 3px 0 var(--ink);
+}
+
+.radio input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    box-shadow: none;
+    accent-color: var(--ink);
+    cursor: pointer;
+}
+
+.radio-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+}
+
+.radio-texto b {
+    font-weight: 700;
+}
+
+.radio-texto small {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+}
+
+.acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+}
