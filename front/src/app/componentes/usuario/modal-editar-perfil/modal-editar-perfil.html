@@ -1,0 +1,29 @@
+<div class="overlay">
+    <form class="modal" [formGroup]="formPerfil" (ngSubmit)="guardar()">
+        <h2>Editar perfil</h2>
+
+        @if (error()) {
+            <p class="msg-error">{{ error() }}</p>
+        }
+
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" formControlName="nombre" />
+
+        <label for="apellido">Apellido</label>
+        <input id="apellido" type="text" formControlName="apellido" />
+
+        <label for="fechaNacimiento">Fecha de nacimiento</label>
+        <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" />
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" formControlName="descripcion" rows="3"></textarea>
+        @if (formPerfil.get('descripcion')?.errors?.['minlength']) {
+            <p class="error">La descripción debe tener al menos 10 caracteres.</p>
+        }
+
+        <div class="acciones">
+            <button type="button" class="btn" (click)="cerrar.emit()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="formPerfil.invalid || cargando()">Guardar</button>
+        </div>
+    </form>
+</div>

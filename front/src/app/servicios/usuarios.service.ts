@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { RespuestaUsuarios  } from '../modelos/usuario';
+import { RespuestaUsuarios, DatosPerfil, Usuario  } from '../modelos/usuario';
 import { RespuestaAuth } from '../modelos/auth';
 
 @Service()
@@ -23,5 +23,9 @@ export class UsuariosService {
 
     habilitarUsuario(id: string) {
         return this.http.post(this.url + '/habilitar/' + id, {});
+    }
+
+    editarPerfil(datos: DatosPerfil) {
+        return this.http.put<Usuario>(this.url + '/perfil', datos);
     }
 }

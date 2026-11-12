@@ -7,11 +7,11 @@ import { ModalCrearUsuario } from '../modal-crear-usuario/modal-crear-usuario';
 
 @Component({
   imports: [ModalCrearUsuario],
-  selector: 'app-admin',
-  styleUrl: './admin.css',
-  templateUrl: './admin.html',
+  selector: 'app-dashboard-usuarios',
+  styleUrl: './dashboard-usuarios.css',
+  templateUrl: './dashboard-usuarios.html',
 })
-export class Admin {
+export class DashboardUsuarios {
   usuarios = signal<Usuario[]>([])
   error = signal('');
   pagina = signal(0);

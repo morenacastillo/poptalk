@@ -5,7 +5,7 @@ export interface RespuestaAuth {
     exp?: number;
 }
 
-export interface RespuestaRefresh {
+export interface RespuestaRefrescar {
     token: string;
     exp: number;
 }

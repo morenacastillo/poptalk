@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { DatosPublicacion } from '../../../modelos/publicacion';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PublicacionesService } from '../../../servicios/publicaciones.service';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 
@@ -14,7 +14,7 @@ export class PublicacionDetalle implements OnInit {
   publicacion = signal<DatosPublicacion | null>(null);
   error = signal('');
 
-  constructor(private route: ActivatedRoute, private publicacionesService: PublicacionesService) {}
+  constructor(private route: ActivatedRoute, private publicacionesService: PublicacionesService, private router: Router) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -22,5 +22,9 @@ export class PublicacionDetalle implements OnInit {
       next: (respuesta) => this.publicacion.set(respuesta),
       error: () => this.error.set('No se pudo cargar la publicación.')
     });
+  }
+
+  volverAlHome() {
+    this.router.navigate(['/home']);
   }
 }

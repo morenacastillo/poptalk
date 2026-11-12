@@ -16,3 +16,11 @@ export interface Usuario {
     perfil: string;
     habilitado: boolean;
 }
+
+
+export interface DatosPerfil {
+    nombre: string;
+    apellido: string;
+    fechaNacimiento: string;
+    descripcion: string;
+}

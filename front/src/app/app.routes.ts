@@ -35,8 +35,8 @@ export const routes: Routes = [
                 loadComponent: () => import('./componentes/usuario/perfil/perfil'). then(m => m.Perfil)
             },
             {
-                path: 'admin',
-                loadComponent: () => import('./componentes/admin/homeAdmin/admin'). then(m => m.Admin),
+                path: 'dashboard/usuarios',
+                loadComponent: () => import('./componentes/admin/dashboard-usuarios/dashboard-usuarios'). then(m => m.DashboardUsuarios),
                 canMatch: [roleAdminGuard]
             },
             {

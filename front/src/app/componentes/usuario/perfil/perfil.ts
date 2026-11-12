@@ -6,9 +6,10 @@ import { DatosPublicacion } from '../../../modelos/publicacion';
 import { DatePipe } from '@angular/common';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 import { ModalPublicacion } from '../modal-publicacion/modal-publicacion';
+import { ModalEditarPerfil } from '../modal-editar-perfil/modal-editar-perfil';
 
 @Component({
-  imports: [CardPublicacion, ModalPublicacion, DatePipe],
+  imports: [CardPublicacion, ModalPublicacion, DatePipe, ModalEditarPerfil],
   selector: 'app-perfil',
   styleUrl: './perfil.css',
   templateUrl: './perfil.html',
@@ -19,6 +20,7 @@ export class Perfil implements OnInit {
   publicacionesUsuario = signal<DatosPublicacion[]>([])
   error = signal('');
   modalAbierto = signal(false);
+  modalEditar = signal(false);
 
   constructor(private auth: AuthService, private publicacionesService: PublicacionesService) {}
 
@@ -44,6 +46,11 @@ export class Perfil implements OnInit {
   subirPublicacion() {
     this.modalAbierto.set(false);
     this.obtenerPublicacionesPerfil()
+  }
+
+  perfilEditado() {
+    this.modalEditar.set(false);
+    this.usuario = this.auth.usuario();
   }
 
   

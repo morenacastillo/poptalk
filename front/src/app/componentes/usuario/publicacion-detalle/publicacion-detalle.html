@@ -1,5 +1,5 @@
 @if (publicacion()) {
-    <app-card-publicacion [publicacion]="publicacion()!" [enDetalle]="true" />
+    <app-card-publicacion [publicacion]="publicacion()!" [enDetalle]="true" (eliminada)="volverAlHome()" />
 }
 @if (error()) {
     <p>{{ error() }}</p>

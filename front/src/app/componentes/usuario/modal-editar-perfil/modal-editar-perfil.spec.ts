@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Admin } from './admin';
+import { ModalEditarPerfil } from './modal-editar-perfil';
 
-describe('Admin', () => {
-  let component: Admin;
-  let fixture: ComponentFixture<Admin>;
+describe('ModalEditarPerfil', () => {
+  let component: ModalEditarPerfil;
+  let fixture: ComponentFixture<ModalEditarPerfil>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Admin],
+      imports: [ModalEditarPerfil],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Admin);
+    fixture = TestBed.createComponent(ModalEditarPerfil);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -19,7 +19,7 @@
 .perfil-card i:nth-child(1)  { width: 110px; height: 110px; background: var(--pink);   right: 40px;  top: -35px; }
 .perfil-card i:nth-child(2)  { width: 56px;  height: 56px;  background: var(--butter); right: 170px; top: 80px; }
 .perfil-card i:nth-child(3)  { width: 80px;  height: 80px;  background: var(--white);  right: 24px;  bottom: -25px; }
-.perfil-card i:nth-child(4)  { width: 44px;  height: 44px;  background: var(--butter); left: 24px;   bottom: 18px; }
+.perfil-card i:nth-child(4)  { width: 44px;  height: 44px;  background: var(--butter); left: -16px;  bottom: 18px; }
 .perfil-card i:nth-child(5)  { width: 70px;  height: 70px;  background: var(--pink);   left: -20px;  top: -20px; }
 .perfil-card i:nth-child(6)  { width: 36px;  height: 36px;  background: var(--sky-d);  left: 120px;  top: 14px; }
 .perfil-card i:nth-child(7)  { width: 90px;  height: 90px;  background: var(--butter); left: 38%;    bottom: -45px; }
@@ -66,7 +66,20 @@
     font-weight: 700;
 }
 
-/* panel blanco "Sobre mí" con la descripción y los datos */
+.rol {
+    display: inline-block;
+    padding: 0 8px;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 700;
+    background: var(--white);
+}
+
+.rol.admin {
+    background: var(--butter);
+}
+
 .sobre-mi {
     flex: 1;
     min-width: 260px;
@@ -132,4 +145,11 @@
 .mis-publicaciones h3 {
     font-family: var(--f-title);
     font-size: 1.3rem;
+}
+
+.btn-editar {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    z-index: 2;
 }

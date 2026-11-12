@@ -1,5 +1,7 @@
 <section class="perfil-card">
     <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    
+    <button type="button" class="btn btn-sm btn-editar" (click)="modalEditar.set(true)">Editar perfil</button>
 
     <div class="perfil-cuerpo">
         <div class="perfil-quien">
@@ -8,6 +10,7 @@
             }
             <h2>{{ usuario?.nombre }} {{ usuario?.apellido }}</h2>
             <span class="user">&#64;{{ usuario?.nombreUsuario }}</span>
+            <span class="rol" [class.admin]="usuario?.perfil === 'administrador'">{{ usuario?.perfil }}</span>
         </div>
 
         <div class="sobre-mi">
@@ -41,6 +44,10 @@
 
 @if (modalAbierto()) {
     <app-modal-publicacion (cerrar)="modalAbierto.set(false)" (creada)="subirPublicacion()" />
+}
+
+@if (modalEditar()) {
+    <app-modal-editar-perfil (cerrar)="modalEditar.set(false)" (guardado)="perfilEditado()" />
 }
 
 

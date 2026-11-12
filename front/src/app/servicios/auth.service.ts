@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { DatosLogin, RespuestaAuth, RespuestaRefresh } from '../modelos/auth';
+import { DatosLogin, RespuestaAuth, RespuestaRefrescar } from '../modelos/auth';
 import { Usuario } from '../modelos/usuario';
 
 @Service()
@@ -44,8 +44,8 @@ export class AuthService {
         return guardado ? JSON.parse(guardado) : null;
     }
 
-    refreshToken() {
-        return this.http.post<RespuestaRefresh>(this.url + '/refresh', {})
+    refrescarToken() {
+        return this.http.post<RespuestaRefrescar>(this.url + '/refrescar', {})
     }
 
     guardarVencimiento(exp: number) {
@@ -58,6 +58,11 @@ export class AuthService {
 
     autorizar() {
         return this.http.post<RespuestaAuth>(this.url + '/autorizar', {})
+    }
+
+    actualizarUsuario(usuario: Usuario) {
+        localStorage.setItem('usuario', JSON.stringify(usuario));
+        this.usuario.set(usuario);
     }
 
 }
