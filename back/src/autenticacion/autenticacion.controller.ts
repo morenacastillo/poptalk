@@ -11,7 +11,7 @@ import { memoryStorage } from 'multer';
 export class AutenticacionController {
   constructor(private readonly authService: AutenticacionService) {}
 
-  @Post('refresh')
+  @Post('refrescar')
   @UseGuards(AuthGuard)
   async refrescar(@Req() request: any, @Res({ passthrough: true }) res: Response) {
     const token = await this.authService.refrescarToken(request.user);

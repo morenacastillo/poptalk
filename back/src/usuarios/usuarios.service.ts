@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsuarioDocument } from './entities/usuario.entity.js';
-import { FileService } from '../file/file/file.service.js';
+import { UpdateUsuarioDto } from './dto/update-usuario.dto.js';
 
 @Injectable()
 export class UsuariosService {
@@ -54,4 +54,21 @@ export class UsuariosService {
     usuario.habilitado = false;
     await usuario.save();
   }
+
+  async actualizarPerfil(id: string, updateUsuarioDto: UpdateUsuarioDto) {
+    const usuario = await this.usuarioModel.findById(id)
+    if (!usuario) {
+      throw new NotFoundException('El usuario no existe');
+    }
+
+    usuario.nombre = updateUsuarioDto.nombre;
+    usuario.apellido = updateUsuarioDto.apellido;
+    usuario.fechaNacimiento = updateUsuarioDto.fechaNacimiento;
+    usuario.descripcion = updateUsuarioDto.descripcion;
+    await usuario.save();
+
+    return this.usuarioModel.findById(id).select('-contrasena');
+    }
+
+
 }
