@@ -13,11 +13,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class CardComentario {
   comentario = input.required<DatosComentario>();
-
   error = signal('')
-
   eliminada = output<void>();
-
   editando = signal(false);
   modificado = output<void>();
 

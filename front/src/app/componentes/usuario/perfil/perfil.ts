@@ -7,9 +7,10 @@ import { DatePipe } from '@angular/common';
 import { CardPublicacion } from '../card-publicacion/card-publicacion';
 import { ModalPublicacion } from '../modal-publicacion/modal-publicacion';
 import { ModalEditarPerfil } from '../modal-editar-perfil/modal-editar-perfil';
+import { NombreCompletoPipe } from '../../../pipes/nombre-completo-pipe';
 
 @Component({
-  imports: [CardPublicacion, ModalPublicacion, DatePipe, ModalEditarPerfil],
+  imports: [CardPublicacion, ModalPublicacion, DatePipe, ModalEditarPerfil, NombreCompletoPipe],
   selector: 'app-perfil',
   styleUrl: './perfil.css',
   templateUrl: './perfil.html',

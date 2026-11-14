@@ -1,0 +1,44 @@
+h2 {
+    font-family: var(--f-title);
+    margin-bottom: 16px;
+}
+
+.opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* cada opción es un link con forma de tarjeta */
+.opcion {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 24px;
+    background: var(--butter);
+    border: var(--bw) solid var(--ink);
+    border-radius: var(--r);
+    box-shadow: var(--sh);
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.opcion.estadisticas {
+    background: var(--pink);
+}
+
+.opcion:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+.opcion b {
+    font-family: var(--f-title);
+    font-size: 1.4rem;
+}
+
+@media (max-width: 760px) {
+    .opciones {
+        grid-template-columns: 1fr;
+    }
+}

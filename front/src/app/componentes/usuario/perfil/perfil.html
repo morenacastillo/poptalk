@@ -8,7 +8,7 @@
             @if (usuario?.imagen) {
                 <img class="foto-perfil" [src]="usuario?.imagen" alt="Foto de perfil" />
             }
-            <h2>{{ usuario?.nombre }} {{ usuario?.apellido }}</h2>
+            <h2>{{ usuario | nombreCompleto }}</h2>
             <span class="user">&#64;{{ usuario?.nombreUsuario }}</span>
             <span class="rol" [class.admin]="usuario?.perfil === 'administrador'">{{ usuario?.perfil }}</span>
         </div>

@@ -35,8 +35,18 @@ export const routes: Routes = [
                 loadComponent: () => import('./componentes/usuario/perfil/perfil'). then(m => m.Perfil)
             },
             {
+                path: 'dashboard',
+                loadComponent: () => import('./componentes/admin/dashboard/dashboard').then(m => m.Dashboard),
+                canMatch: [roleAdminGuard]
+            },
+            {
                 path: 'dashboard/usuarios',
                 loadComponent: () => import('./componentes/admin/dashboard-usuarios/dashboard-usuarios'). then(m => m.DashboardUsuarios),
+                canMatch: [roleAdminGuard]
+            },
+            {
+                path: 'dashboard/estadisticas',
+                loadComponent: () => import('./componentes/admin/dashboard-estadisticas/dashboard-estadisticas').then(m => m.DashboardEstadisticas),
                 canMatch: [roleAdminGuard]
             },
             {

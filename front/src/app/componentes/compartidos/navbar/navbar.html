@@ -13,8 +13,6 @@
     
         </div>
 
-        @if (usuario()?.perfil === 'administrador') {
-            <a routerLink="/home/dashboard/usuarios" routerLinkActive="on">Administrador</a>
-        }
+        <a *appSoloAdmin routerLink="/home/dashboard" routerLinkActive="on">Administrador</a>
     </div>
 </header>

@@ -3,10 +3,11 @@ import { Usuario } from '../../../modelos/usuario';
 import { UsuariosService } from '../../../servicios/usuarios.service';
 import { AuthService } from '../../../servicios/auth.service';
 import { ModalCrearUsuario } from '../modal-crear-usuario/modal-crear-usuario';
+import { NombreCompletoPipe } from '../../../pipes/nombre-completo-pipe';
 
 
 @Component({
-  imports: [ModalCrearUsuario],
+  imports: [ModalCrearUsuario, NombreCompletoPipe],
   selector: 'app-dashboard-usuarios',
   styleUrl: './dashboard-usuarios.css',
   templateUrl: './dashboard-usuarios.html',
@@ -15,7 +16,7 @@ export class DashboardUsuarios {
   usuarios = signal<Usuario[]>([])
   error = signal('');
   pagina = signal(0);
-  limite = 10;
+  limite = 8;
   hayMas = signal(false);
   modalAbierto = signal(false);
   total = signal(0);

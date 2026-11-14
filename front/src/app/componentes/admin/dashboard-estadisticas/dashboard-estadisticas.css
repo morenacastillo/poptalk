@@ -1,0 +1,64 @@
+/* barra con las dos fechas y el botón */
+.filtro {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.fecha {
+    width: 180px;
+}
+
+/* los tres gráficos en una sola fila */
+.graficos {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    width: min(1360px, calc(100vw - 48px));
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tarjeta {
+    background: var(--white);
+    border: var(--bw) solid var(--ink);
+    border-radius: var(--r);
+    box-shadow: var(--sh);
+    padding: 14px 18px;
+    min-width: 0;
+}
+
+.tarjeta h3 {
+    font-family: var(--f-title);
+    margin-bottom: 8px;
+}
+
+/* el alto se calcula con el alto de la ventana, así nunca hay scroll */
+.lienzo {
+    position: relative;
+    height: calc(100vh - 400px);
+    min-height: 180px;
+}
+
+/* cartel centrado sobre el gráfico vacío: no empuja nada */
+.sin-datos {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--ink-soft);
+    font-size: .9rem;
+}
+
+@media (max-width: 760px) {
+    .graficos {
+        grid-template-columns: 1fr;
+    }
+
+    .lienzo {
+        height: 240px;
+    }
+}

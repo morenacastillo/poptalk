@@ -5,10 +5,13 @@ import { PublicacionesService } from '../../../servicios/publicaciones.service';
 import { AuthService } from '../../../servicios/auth.service';
 import { RouterLink } from '@angular/router';
 import { Comentarios } from '../comentarios/comentarios';
+import { RecortarPipe } from '../../../pipes/recortar-pipe';
+import { PuedeBorrar } from '../../../directivas/puede-borrar';
+import { Latido } from '../../../directivas/latido';
 
 
 @Component({
-  imports: [DatePipe, RouterLink, Comentarios],
+  imports: [DatePipe, RouterLink, Comentarios, RecortarPipe, PuedeBorrar, Latido],
   selector: 'app-card-publicacion',
   styleUrl: './card-publicacion.css',
   templateUrl: './card-publicacion.html',
@@ -36,11 +39,6 @@ export class CardPublicacion {
         this.error.set(Array.isArray(mensaje) ? mensaje.join('. ') : (mensaje ?? 'Ocurrió un error inesperado.'));
       }
     });
-  }
-
-  puedeEliminar() {
-    const usuario = this.auth.usuario();
-    return usuario?._id === this.publicacion().autor?._id || usuario?.perfil === 'administrador';
   }
 
   leDioMeGusta() {

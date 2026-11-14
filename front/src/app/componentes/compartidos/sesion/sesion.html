@@ -1,6 +1,6 @@
 <div class="overlay">
     <div class="modal">
-        <h2>¡Hola, {{ usuario?.nombre }} {{ usuario?.apellido }}!</h2>
+        <h2>¡Hola, {{ usuario | nombreCompleto }}!</h2>
         <p class="aviso">
             Tu sesión está por vencer. Se cierra en
             <b>{{ segundos() }} @if (segundos() === 1) { segundo } @else { segundos }</b>.

@@ -1,0 +1,47 @@
+<form class="filtro" [formGroup]="formFechas" (ngSubmit)="buscar()">
+    <div class="fecha">
+        <label for="desde">Desde</label>
+        <input id="desde" type="date" formControlName="desde" />
+    </div>
+    <div class="fecha">
+        <label for="hasta">Hasta</label>
+        <input id="hasta" type="date" formControlName="hasta" />
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="formFechas.invalid">Buscar</button>
+</form>
+
+@if (error()) {
+    <p class="msg-error">{{ error() }}</p>
+}
+
+<div class="graficos">
+    <section class="tarjeta">
+        <h3>Publicaciones por usuario</h3>
+        <div class="lienzo">
+            @if (vacioPublicaciones()) {
+                <p class="sin-datos">No hay publicaciones en ese rango.</p>
+            }
+            <canvas id="graficoPublicaciones"></canvas>
+        </div>
+    </section>
+
+    <section class="tarjeta">
+        <h3>Comentarios por día</h3>
+        <div class="lienzo">
+            @if (vacioComentarios()) {
+                <p class="sin-datos">No hay comentarios en ese rango.</p>
+            }
+            <canvas id="graficoComentarios"></canvas>
+        </div>
+    </section>
+
+    <section class="tarjeta">
+        <h3>Comentarios por publicación</h3>
+        <div class="lienzo">
+            @if (vacioPorPublicacion()) {
+                <p class="sin-datos">No hay comentarios en ese rango.</p>
+            }
+            <canvas id="graficoPorPublicacion"></canvas>
+        </div>
+    </section>
+</div>

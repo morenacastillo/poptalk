@@ -3,9 +3,10 @@ import { DatosComentario } from '../../../modelos/comentario';
 import { ComentariosService } from '../../../servicios/comentarios.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CardComentario } from '../card-comentario/card-comentario';
+import { ContadorPipe } from '../../../pipes/contador-pipe';
   
 @Component({
-  imports: [ReactiveFormsModule, CardComentario],
+  imports: [ReactiveFormsModule, CardComentario, ContadorPipe],
   selector: 'app-comentarios',
   styleUrl: './comentarios.css',
   templateUrl: './comentarios.html',
@@ -67,7 +68,7 @@ export class Comentarios implements OnInit{
   if (this.resumen()) {
     return 2;
   }
-  return 5;
+  return 4;
   }
 
   cargarMas() {

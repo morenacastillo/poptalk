@@ -36,7 +36,7 @@
                             <img class="avatar" [src]="usuario.imagen" alt="Foto de perfil" />
                             <div>
                                 <b>&#64;{{ usuario.nombreUsuario }}</b>
-                                <small>{{ usuario.nombre }} {{ usuario.apellido }} · {{ usuario.correo }}</small>
+                                <small>{{ usuario | nombreCompleto }} · {{ usuario.correo }}</small>
                             </div>
                         </div>
                     </td>

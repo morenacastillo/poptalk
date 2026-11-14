@@ -1,9 +1,10 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { AuthService } from '../../../servicios/auth.service';
 import { Usuario } from '../../../modelos/usuario';
+import { NombreCompletoPipe } from '../../../pipes/nombre-completo-pipe';
 
 @Component({
-  imports: [],
+  imports: [NombreCompletoPipe],
   selector: 'app-sesion',
   styleUrl: './sesion.css',
   templateUrl: './sesion.html',

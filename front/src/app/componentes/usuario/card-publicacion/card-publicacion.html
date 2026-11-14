@@ -13,14 +13,16 @@
             @if (!enDetalle()) {
                 <a class="btn btn-sm" [routerLink]="['/home/publicacion', publicacion()._id]">Ver publicación</a>
             }
-            @if (puedeEliminar()) {
-                <button type="button" class="btn btn-sm btn-eliminar" (click)="borrarPubliacion()">Eliminar publicación</button>
-            }
+            <button *appPuedeBorrar="publicacion().autor?._id ?? ''" type="button" class="btn btn-sm btn-eliminar" (click)="borrarPubliacion()">Eliminar publicación</button>
         </div>
     </div>
 
     <h3>{{ publicacion().titulo }}</h3>
-    <p>{{ publicacion().mensaje }}</p>
+    @if (enDetalle()) {
+        <p>{{ publicacion().mensaje }}</p>
+    } @else {
+        <p>{{ publicacion().mensaje | recortar:150 }}</p>
+    }
 
     @if (publicacion().imagen) {
         <img class="cover" [src]="publicacion().imagen" alt="Imagen de la publicación" />
@@ -28,7 +30,7 @@
 
 
     <div class="post-foot">
-        <button type="button" class="btn btn-sm btn-megusta" [class.liked]="leDioMeGusta()" (click)="alternarMeGusta()"> ♥ Me gusta · {{ publicacion().likes.length }}
+        <button type="button" class="btn btn-sm btn-megusta" appLatido [class.liked]="leDioMeGusta()" (click)="alternarMeGusta()"> ♥ Me gusta · {{ publicacion().likes.length }}
         </button>
     </div>
 
