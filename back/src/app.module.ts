@@ -15,6 +15,7 @@ import { ComentariosModule } from './comentarios/comentarios.module.js';
             UsuariosModule,
             PublicacionesModule,
             AutenticacionModule,
+            ComentariosModule,
             AuthenticationModule.forRoot({
               globalGuard: false,
               session: {
@@ -22,7 +23,6 @@ import { ComentariosModule } from './comentarios/comentarios.module.js';
                 idleTtl: '3d'
             },
           }),
-            ComentariosModule
         ],
   controllers: [AppController],
   providers: [AppService],
