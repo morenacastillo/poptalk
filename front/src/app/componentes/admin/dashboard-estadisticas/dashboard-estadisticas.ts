@@ -12,10 +12,9 @@ import { Dato } from '../../../modelos/estadisticas';
   templateUrl: './dashboard-estadisticas.html',
 })
 export class DashboardEstadisticas implements OnInit{
-  formFechas = new FormGroup({
-    desde: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    hasta: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-  });
+  formPublicaciones = this.crearFormFechas();
+  formComentarios = this.crearFormFechas();
+  formPorPublicacion = this.crearFormFechas();
 
   error = signal('');
   vacioPublicaciones = signal(false);
@@ -31,15 +30,9 @@ export class DashboardEstadisticas implements OnInit{
   constructor(private estadisticasService: EstadisticasService) {}
 
   ngOnInit() {
-    const hoy = new Date()
-    const haceUnMes = new Date()
-    haceUnMes.setMonth(hoy.getMonth() - 1)
-
-    this.formFechas.setValue({
-      desde: haceUnMes.toISOString().substring(0, 10),
-      hasta: hoy.toISOString().substring(0, 10),
-    });
-    this.buscar();
+    this.buscarPublicaciones();
+    this.buscarComentarios();
+    this.buscarComentariosPorPublicacion();
   }
 
   ngOnDestroy() {
@@ -48,21 +41,41 @@ export class DashboardEstadisticas implements OnInit{
     this.graficoPorPublicacion?.destroy();
   }
 
-  buscar() {
-    if(this.formFechas.invalid) {
+  // arma un formulario desde/hasta con el último mes como valor inicial
+  crearFormFechas() {
+    const hoy = new Date()
+    const haceUnMes = new Date()
+    haceUnMes.setMonth(hoy.getMonth() - 1)
+
+    return new FormGroup({
+      desde: new FormControl(haceUnMes.toISOString().substring(0, 10), { nonNullable: true, validators: [Validators.required] }),
+      hasta: new FormControl(hoy.toISOString().substring(0, 10), { nonNullable: true, validators: [Validators.required] }),
+    });
+  }
+
+  buscarPublicaciones() {
+  if (this.formPublicaciones.invalid) {
+    return
+  }
+  this.error.set('')
+  const fechas = this.formPublicaciones.getRawValue()
+
+  this.estadisticasService.publicacionesPorUsuario(fechas.desde, fechas.hasta).subscribe({
+    next: (datos) => {
+      this.vacioPublicaciones.set(datos.length === 0);
+      this.graficoPublicaciones = this.dibujar(this.graficoPublicaciones, 'graficoPublicaciones', 'pie', 'Publicaciones', datos);
+    },
+    error: (err) => this.mostrarError(err)
+  });
+}
+
+
+  buscarComentarios() {
+    if (this.formComentarios.invalid) {
       return
     }
-
     this.error.set('')
-    const fechas = this.formFechas.getRawValue()
-
-    this.estadisticasService.publicacionesPorUsuario(fechas.desde, fechas.hasta).subscribe({
-      next: (datos) => {
-        this.vacioPublicaciones.set(datos.length === 0);
-        this.graficoPublicaciones = this.dibujar(this.graficoPublicaciones, 'graficoPublicaciones', 'pie', 'Publicaciones', datos);
-      },
-      error: (err) => this.mostrarError(err)
-    });
+    const fechas = this.formComentarios.getRawValue()
 
     this.estadisticasService.comentariosPorDia(fechas.desde, fechas.hasta).subscribe({
       next: (datos) => {
@@ -71,6 +84,15 @@ export class DashboardEstadisticas implements OnInit{
       },
       error: (err) => this.mostrarError(err)
     });
+  }
+
+
+  buscarComentariosPorPublicacion() {
+    if (this.formPorPublicacion.invalid) {
+      return
+    }
+    this.error.set('')
+    const fechas = this.formPorPublicacion.getRawValue()
 
     this.estadisticasService.comentariosPorPublicacion(fechas.desde, fechas.hasta).subscribe({
       next: (datos) => {
@@ -80,6 +102,9 @@ export class DashboardEstadisticas implements OnInit{
       error: (err) => this.mostrarError(err)
     });
   }
+
+
+
 
 
   private dibujar(anterior: Chart | undefined, idCanvas: string, tipo: 'pie' | 'line' | 'bar', titulo: string, datos: Dato[]) {

@@ -1,14 +1,19 @@
-/* barra con las dos fechas y el botón */
+/* las dos fechas y el botón, dentro de cada tarjeta */
 .filtro {
     display: flex;
     align-items: flex-end;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
 .fecha {
-    width: 180px;
+    flex: 1;
+    min-width: 0;
+}
+
+.fecha input {
+    padding: 6px 8px;
+    font-size: .85rem;
 }
 
 /* los tres gráficos en una sola fila */
