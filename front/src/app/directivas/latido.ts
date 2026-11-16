@@ -14,7 +14,7 @@ export class Latido {
 
   latir() {
     this.activo.set(true);
-    setTimeout(() => this.activo.set(false), 150);
+    setTimeout(() => this.activo.set(false), 250);
   }
 
   escala() {
