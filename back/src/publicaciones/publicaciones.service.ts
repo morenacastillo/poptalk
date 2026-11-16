@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { CreatePublicacionDto } from './dto/create-publicacion.dto.js';
-import { UpdatePublicacionDto } from './dto/update-publicacion.dto.js';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Error as MongooseError } from 'mongoose';
 import { PublicacionDocument } from './entities/publicacion.entity.js';
@@ -46,7 +45,7 @@ export class PublicacionesService {
     if(orden === 'megusta') {
       publicaciones = await this.publicacionModel.aggregate([
       { $match: filtro },
-      { $addFields: { cantidadLikes: { $size: '$likes' } } },
+      { $addFields: { cantidadLikes: { $size: '$likes' } } }, // size cuenta la cantidad de ids en el array likes
       { $sort: { cantidadLikes: -1, fechaPublicacion: -1 } },
       { $skip: offset * limit },
       { $limit: limit },

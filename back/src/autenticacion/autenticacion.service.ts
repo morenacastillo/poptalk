@@ -118,6 +118,7 @@ export class AutenticacionService {
     return this.jwtService.signAsync(payload) //payload + firma clave secreta
   }
 
+  
   // en producción (Vercel, HTTPS) el front y el back están en dominios distintos:
   // la cookie necesita secure + sameSite 'none'. En local alcanza con 'lax'.
   private opcionesCookie() {

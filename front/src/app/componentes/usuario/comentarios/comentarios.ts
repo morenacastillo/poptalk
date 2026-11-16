@@ -51,7 +51,7 @@ export class Comentarios implements OnInit{
       return
     }
     this.comentariosService.crearComentario(this.idPublicacion(),
-    this.formComentario.getRawValue().mensaje!).subscribe({
+    this.formComentario.getRawValue().mensaje!).subscribe({ // el ! asegura q el mensaje no es null
       next: () => {
         this.formComentario.reset();
         this.recargar();

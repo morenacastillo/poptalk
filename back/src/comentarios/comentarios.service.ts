@@ -41,14 +41,14 @@ export class ComentariosService {
     if (!publicacionEncontrada || publicacionEncontrada.habilitado === false) {
       throw new NotFoundException('La publicacion no existe');
     }
-    const comentarios = await this.comentarioModel
+    const comentarios = await this.comentarioModel // me busca segun pagina actual
     .find({publicacion: idPublicacion, habilitado: true})
     .sort({ fechaCreacion: -1 })
     .skip(offset * limit)
     .limit(limit)
     .populate('autor', 'nombreUsuario imagen');
 
-    const total = await this.comentarioModel.countDocuments({ publicacion: idPublicacion, habilitado: true });
+    const total = await this.comentarioModel.countDocuments({ publicacion: idPublicacion, habilitado: true }); // me trae el total indiferentemente de la pagina actual
 
     return { comentarios, total}
   }

@@ -47,7 +47,7 @@ export class Registro {
     this.guardadoOk.set(false);
 
     const valores = this.formRegistro.getRawValue();
-    const datos = new FormData();
+    const datos = new FormData();  //se utiliza formd data paa mandar la imagen pq un form normal (json) no viajan archivos
     datos.append('nombreUsuario', valores.nombreUsuario);
     datos.append('nombre', valores.nombre);
     datos.append('apellido', valores.apellido);

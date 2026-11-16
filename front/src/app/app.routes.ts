@@ -35,6 +35,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./componentes/usuario/perfil/perfil'). then(m => m.Perfil)
             },
             {
+                path: 'publicacion/:id',
+                loadComponent: () => import('./componentes/usuario/publicacion-detalle/publicacion-detalle').then(m => m.PublicacionDetalle)
+            },
+            {
                 path: 'dashboard',
                 loadComponent: () => import('./componentes/admin/dashboard/dashboard').then(m => m.Dashboard),
                 canMatch: [roleAdminGuard]
@@ -48,10 +52,6 @@ export const routes: Routes = [
                 path: 'dashboard/estadisticas',
                 loadComponent: () => import('./componentes/admin/dashboard-estadisticas/dashboard-estadisticas').then(m => m.DashboardEstadisticas),
                 canMatch: [roleAdminGuard]
-            },
-            {
-                path: 'publicacion/:id',
-                loadComponent: () => import('./componentes/usuario/publicacion-detalle/publicacion-detalle').then(m => m.PublicacionDetalle)
             },
         ]
     },
