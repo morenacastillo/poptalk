@@ -30,7 +30,10 @@ export class Layout implements OnInit, OnDestroy{
 
       if(restante <= 0){
         this.mostrarAviso.set(false)
-        this.cerrarAviso();
+        this.cerrarAviso()
+        setTimeout(() => this.authService.autorizar().subscribe({ error: () => {} }), 1500);
+        ;
+        
       }
 
     }, 1000)
